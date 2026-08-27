@@ -1,122 +1,77 @@
 [
   {
-    "title": "Australia's South32 annual profit jumps 55%, extends shareholder-returns program",
-    "description": "Australia's South32 on Thursday posted a 55% rise in annual profit, largely in line with market expectations, and extended its shareholder-returns program, sending its shares to a more than four-year high. Shares of the world's biggest manganese producer rose as much as 2.9% to A$5.29. They were last up 1%.",
-    "url": "https://www.miningweekly.com/article/australias-south32-annual-profit-jumps-55-extends-shareholder-returns-program-2026-08-27",
-    "source": "miningweekly",
-    "company": "South32",
-    "ticker": "S32",
-    "category": "not_relevant",
-    "fundamental_impact_score": 5,
-    "reasoning": "This article reports positive financial performance, including a 55% increase in annual profit and expanded shareholder returns that drove the stock to a four-year high. Because it covers a standard, positive earnings update with no price drop or reputational shock, it is not relevant to this project.",
-    "confident": true
-  },
-  {
-    "title": "Las Vegas rescinds Arts District parking rate changes",
-    "description": "The City of Las Vegas has reversed planned parking rate hikes in the 18b Arts District, keeping employee permits at $10 following pushback from local businesses.",
-    "url": "https://www.fox5vegas.com/2026/08/27/las-vegas-rescinds-arts-district-parking-rate-changes/",
-    "source": "fox5vegas",
-    "company": null,
-    "ticker": null,
-    "category": "not_relevant",
-    "fundamental_impact_score": 1,
-    "reasoning": "This news describes a local municipal policy adjustment made by the City of Las Vegas regarding parking rates and permits. Because it concerns city government decisions rather than a publicly traded company, it is not relevant for stock analysis.",
-    "confident": true
-  },
-  {
-    "title": "Cardinals extend offensive lineman to two-year, $20 million deal",
-    "description": "The Arizona Cardinals have given center Hjalte Froholdt a two-year contract extension worth two years and $20 million.",
-    "url": "https://us.headtopics.com/news/cardinals-extend-offensive-lineman-to-two-year-20-million-87079236",
-    "source": "headtopics",
-    "company": "Arizona Cardinals",
-    "ticker": null,
-    "category": "not_relevant",
-    "fundamental_impact_score": 5,
-    "reasoning": "This headline discusses a contract extension for an NFL football player on the Arizona Cardinals. Since the Arizona Cardinals are a private sports franchise rather than a publicly traded company, this news is not relevant to stock market screening.",
-    "confident": true
-  },
-  {
-    "title": "Perseus reports strong financial performance",
-    "description": "ASX-listed Perseus Mining has reported a strong financial performance for the financial year ended June 30, with its profit after tax having increased by 14% year-on-year to $480.5-million. The company reported a 19% year-on-year increase in revenue to $1.",
-    "url": "https://us.headtopics.com/news/perseus-reports-strong-financial-performance-87079458",
-    "source": "headtopics",
-    "company": "Perseus Mining",
-    "ticker": "PRU",
-    "category": "fundamental_issue",
-    "fundamental_impact_score": 5,
-    "reasoning": "This article reports Perseus Mining's annual financial results, detailing a 14% increase in net profit and a 19% increase in revenue. Because the story focuses entirely on underlying financial performance and earnings rather than a reputational or confidence shock, it relates strictly to business fundamentals. It does not present a short-term PR or non-fundamental drop catalyst.",
-    "confident": true
-  },
-  {
-    "title": "Texas must study three-year college degree options, Gov. Abbott says",
-    "description": "Abbott, who is seeking reelection, wants recommendations on how to implement shortened programs to ease student costs and meet workforce needs.",
-    "url": "https://us.headtopics.com/news/texas-must-study-three-year-college-degree-options-gov-87079453",
-    "source": "headtopics",
-    "company": null,
-    "ticker": null,
-    "category": "not_relevant",
-    "fundamental_impact_score": 1,
-    "reasoning": "This headline covers state government policy proposals regarding higher education program lengths in Texas. It does not involve a specific publicly traded company, executive scandal, or corporate financial announcement. Consequently, it is not relevant to tracking corporate confidence shocks or fundamental stock moves.",
-    "confident": true
-  },
-  {
-    "title": "Africa's greatest mineral asset isn't underground",
-    "description": "The global race for critical minerals is entering a new phase. No longer defined solely by access to mineral reserves, it is increasingly being shaped by industrial policy, geopolitical competition and the race to build resilient supply chains for electric vehicles, renewable energy technologies and advanced manufacturing.",
-    "url": "https://us.headtopics.com/news/africa-s-greatest-mineral-asset-isn-t-underground-87079450",
-    "source": "headtopics",
-    "company": null,
-    "ticker": null,
-    "category": "not_relevant",
-    "fundamental_impact_score": 1,
-    "reasoning": "This headline and description represent macro-level commentary on industrial policy and critical mineral supply chains rather than news about a specific company. It does not reference any corporate scandal, executive controversy, or company-level financial report. Consequently, it is not relevant for identifying company-specific stock price drops.",
-    "confident": true
-  },
-  {
-    "title": "IMARC 2026 puts spotlight on mining\u2019s Mission Critical",
-    "description": "Mining\u2019s Mission Critical, to responsibly deliver vital materials, will take centre stage at this year\u2019s International Mining and Resources Conference + Expo (IMARC) as the industry pivots strategically and operationally to align trillions of dollars of new investment with the world\u2019s economic, technological and environmental trajectory.",
-    "url": "https://us.headtopics.com/news/imarc-2026-puts-spotlight-on-mining-s-mission-critical-87079444",
-    "source": "headtopics",
-    "company": null,
-    "ticker": null,
-    "category": "not_relevant",
-    "fundamental_impact_score": 1,
-    "reasoning": "This headline describes an upcoming mining industry conference and broad sector trends rather than news about a specific company. It contains no reputational scandal, executive controversy, or fundamental financial news that would trigger a stock drop. Consequently, it is not relevant to screening for short-term reputational shocks.",
-    "confident": true
-  },
-  {
-    "title": "South African rand steadies ahead of producer inflation data",
+    "title": "Churchill County legal - 63806",
     "description": null,
-    "url": "https://www.reuters.com/world/africa/south-african-rand-steadies-ahead-producer-inflation-data-2026-08-27/",
-    "source": "reuters_com",
+    "url": "https://www.nevadaappeal.com/news/2026/aug/26/churchill-county-legal-63806/",
+    "source": "nevadaappeal",
     "company": null,
     "ticker": null,
     "category": "not_relevant",
-    "fundamental_impact_score": 3,
-    "reasoning": "This headline covers foreign exchange movements and macroeconomic data regarding the South African rand, rather than news about an individual publicly traded company. As macro currency news, it does not involve a company-level reputational shock or fundamental business issue.",
-    "confident": true
-  },
-  {
-    "title": "Silver One Resources Announces Upgrade of Leach Pad Resources to Measured & Indicated at Candelaria",
-    "description": "Silver One Resources Inc. (TSXV: SVE,OTC:SLVRF) (OTCQX: SLVRF) (FSE: BRK1) is pleased to report the completion of its Leach Pad resource update at the Candelaria Project in Nevada, resulting in an upgrade of previously Indicated resources on LP1 to the Measured and Indicated (\"M&I;\"), and Inferred t...",
-    "url": "https://investingnews.com/silver-one-resources-announces-upgrade-of-leach-pad-resources-to-measured-indicated-at-candelaria/",
-    "source": "investingnews",
-    "company": "Silver One Resources Inc.",
-    "ticker": "SLVRF",
-    "category": "not_relevant",
-    "fundamental_impact_score": 5,
-    "reasoning": "This headline reports positive operational progress regarding a resource estimate upgrade at a mining project. It contains no news of a PR scandal, executive controversy, or sudden reputational shock. Because it is standard, positive business/exploration news rather than a negative confidence shock, it is not relevant for the Downers strategy.",
-    "confident": true
-  },
-  {
-    "title": "AbbVie Submits Regulatory Application to EMA for SKYRIZI\u00ae Subcutaneous Induction for Adults with Moderately to Severely Active Crohn's Disease",
-    "description": "Submission supported by data from Phase 3 pivotal AFFIRM study If approved, adult Crohn's disease patients will have an additional option for induction of risankizumab which is already approved for intravenous (IV) induction AbbVie (NYSE: ABBV) today announced that it has submitted an applicati...",
-    "url": "https://investingnews.com/abbvie-submits-regulatory-application-to-ema-for-skyrizi-r-subcutaneous-induction-for-adults-with-moderately-to-severely-active-crohn-s-disease/",
-    "source": "investingnews",
-    "company": "AbbVie",
-    "ticker": "ABBV",
-    "category": "not_relevant",
     "fundamental_impact_score": 1,
-    "reasoning": "This headline describes a routine and positive regulatory submission to the European Medicines Agency for an expansion of AbbVie's drug Skyrizi. It does not involve any reputational scandal, executive controversy, or unexpected negative shock. Therefore, it is completely unrelated to the Downers project criteria.",
+    "reasoning": "This headline appears to be a local government public or legal notice for Churchill County rather than news concerning a publicly traded corporation. It contains no corporate or financial information relevant to stock monitoring. Consequently, it has no impact on public equities.",
     "confident": true
+  },
+  {
+    "title": "TEZSPIRE\u00ae DEMONSTRATES POSITIVE PHASE 3 RESULTS IN EOSINOPHILIC ESOPHAGITIS ACROSS BOTH CO-PRIMARY AND ALL KEY SECONDARY ENDPOINTS",
+    "description": "Statistically Significant and Clinically Meaningful Disease and Symptom Improvements Compared to Placebo Maintained Through Week 52Efficacy in a Third Epithelial-Driven Inflammatory Disease Supports Broad Potential of TEZSPIRE Amgen (NASDAQ:AMGN) and AstraZeneca today announced positive top-line r...",
+    "url": "https://investingnews.com/tezspire-r-demonstrates-positive-phase-3-results-in-eosinophilic-esophagitis-across-both-co-primary-and-all-key-secondary-endpoints/",
+    "source": "investingnews",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 40.556621859s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '40s'}]}}"
+  },
+  {
+    "title": "HUBG INVESTOR DEADLINE TOMORROW: Hub Group, Inc. Investors With Substantial Losses Have Opportunity To Lead Class Action Lawsuit",
+    "description": "(MENAFN - PR Newswire) SAN DIEGO, Aug. 27, 2026 /PRNewswire/ -- Robbins Geller Rudman & Dowd LLP If you suffered substantial losses and wish to serve as lead plaintiff of the Hub Group class ...",
+    "url": "https://menafn.com/1111587049/HUBG-INVESTOR-DEADLINE-TOMORROW-Hub-Group-Inc-Investors-With-Substantial-Losses-Have-Opportunity-To-Lead-Class-Action-Lawsuit",
+    "source": "menafn",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 27.197167108s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-3.6-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '27s'}]}}"
+  },
+  {
+    "title": "USDA recalls 30,000 pounds of Argentine beef sold in Texas and Florida",
+    "description": "AUSTIN, Texas \u2014 Nearly 30,000 pounds of raw beef imported from Argentina and sold in Texas and Florida is under recall, according to the U.S. Department of Agriculture, as questions swirl around the beef. And a string of food recalls issued this summer grows. The beef recall notice points to missed import re-inspections as the [...] The post USDA recalls 30,000 pounds of Argentine beef sold in Texas and Florida appeared first on News Pub .",
+    "url": "https://newspub.live/south/austin-tx/usda-recalls-30000-pounds-of-argentine-beef-sold-in-texas-and-florida/",
+    "source": "newspub_live",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 13.867813858s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '13s'}]}}"
+  },
+  {
+    "title": "American ranchers face historic cattle shortage as Trump vows to lower beef prices",
+    "description": "President Donald Trump said he would waiver beef tariffs on imported ground beef for 90 days in an attempt to bring beef prices down and rebuild the U.S. cattle herd.",
+    "url": "https://www.foxbusiness.com/economy/american-ranchers-face-historic-cattle-shortage-trump-vows-lower-beef-prices",
+    "source": "foxbusiness",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 553.846146ms.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '0s'}]}}"
+  },
+  {
+    "title": "USDA recalls 30,000 pounds of Argentine beef sold in Texas and Florida",
+    "description": "Nearly 30,000 pounds of raw beef imported from Argentina and sold in Texas and Florida is under recall, according to the U.S. Department of Agriculture, as ques",
+    "url": "https://us.headtopics.com/news/usda-recalls-30-000-pounds-of-argentine-beef-sold-in-texas-87078779",
+    "source": "headtopics",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 47.209180174s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '47s'}]}}"
+  },
+  {
+    "title": "Michigan Democrats want to fight Trump. First they have to stop fighting each other",
+    "description": "Michigan Democrats want to focus on President Donald Trump and the economy heading into November. But divisions from a bruising Senate primary continue to follow them. Some Democrats have withheld...",
+    "url": "https://www.houstonchronicle.com/news/politics/article/michigan-democrats-want-to-fight-trump-first-22405556.php",
+    "source": "houstonchronicle",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 33.912432973s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '33s'}]}}"
+  },
+  {
+    "title": "Michigan Democrats want to fight Trump. First they have to stop fighting each other",
+    "description": "Michigan Democrats want to focus on President Donald Trump and the economy heading into November. But divisions from a bruising Senate primary continue to follow them. Some Democrats have withheld...",
+    "url": "https://www.beaumontenterprise.com/news/politics/article/michigan-democrats-want-to-fight-trump-first-22405556.php",
+    "source": "beaumontenterprise",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 20.589959303s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '20s'}]}}"
+  },
+  {
+    "title": "Michigan Democrats want to fight Trump. First they have to stop fighting each other",
+    "description": "Michigan Democrats want to focus on President Donald Trump and the economy heading into November. But divisions from a bruising Senate primary continue to follow them. Some Democrats have withheld...",
+    "url": "https://www.myplainview.com/news/politics/article/michigan-democrats-want-to-fight-trump-first-22405556.php",
+    "source": "myplainview",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 7.230613945s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-3.6-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '7s'}]}}"
+  },
+  {
+    "title": "Michigan Democrats want to fight Trump. First they have to stop fighting each other",
+    "description": "Michigan Democrats want to focus on President Donald Trump and the economy heading into November. But divisions from a bruising Senate primary continue to follow them. Some Democrats have withheld...",
+    "url": "https://www.mysanantonio.com/news/politics/article/michigan-democrats-want-to-fight-trump-first-22405556.php",
+    "source": "mysa",
+    "error": "API error after retries: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 53.868696398s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '53s'}]}}"
   }
 ]

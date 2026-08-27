@@ -1,13 +1,12 @@
 import os
 import json
 import requests
-import google.generativeai as genai
+from google import genai
 
 NEWSDATA_API_KEY = os.environ["NEWSDATA_API_KEY"]
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.5-flash")
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 def fetch_headlines():
     url = "https://newsdata.io/api/1/news"
@@ -49,7 +48,10 @@ def classify_headline(headline):
         title=headline["title"],
         description=headline["description"] or "(no description)"
     )
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.6-flash",
+        contents=prompt
+    )
     text = response.text.strip()
     if text.startswith("```"):
         text = text.split("```")[1]

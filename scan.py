@@ -70,12 +70,14 @@ def classify_headline(headline, max_retries=3):
                 return json.loads(text)
             except json.JSONDecodeError:
                 return {"error": "Could not parse response", "raw": text}
-        except errors.ClientError as e:
-            if "RESOURCE_EXHAUSTED" in str(e) and attempt < max_retries - 1:
-                print(f"Rate limited, waiting 30s before retry {attempt + 1}...")
+        except errors.APIError as e:
+            if attempt < max_retries - 1:
+                print(f"API error ({e}), waiting 30s before retry {attempt + 1}...")
                 time.sleep(30)
             else:
-                return {"error": f"API error: {str(e)}"}
+                return {"error": f"API error after retries: {str(e)}"}
+        except Exception as e:
+            return {"error": f"Unexpected error: {str(e)}"}
 
 def main():
     headlines = fetch_headlines()

@@ -21,7 +21,7 @@ def fetch_headlines():
         "category": "business",
         "language": "en",
         "country": "us",
-        "q": "scandal OR backlash OR apologizes OR controversy OR lawsuit OR recall OR breach OR outage OR fined OR investigation"
+        "q": "scandal OR backlash OR lawsuit OR recall OR controversy OR breach"
     }
     response = requests.get(url, params=params)
     response.raise_for_status()

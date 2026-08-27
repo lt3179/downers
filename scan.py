@@ -20,7 +20,8 @@ def fetch_headlines():
         "apikey": NEWSDATA_API_KEY,
         "category": "business",
         "language": "en",
-        "country": "us"
+        "country": "us",
+        "q": "scandal OR backlash OR apologizes OR controversy OR lawsuit OR recall OR breach OR outage OR fined OR investigation"
     }
     response = requests.get(url, params=params)
     response.raise_for_status()

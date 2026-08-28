@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F1EFE8;
+    --bg-panel:#FBFAF6;
+    --bg-panel-alt:#F5F3EC;
+    --bg-inset:#E9E5DA;
+    --border:#D2CCBC;
+    --border-bright:#AFA792;
+    --text-primary:#211E18;
+    --text-dim:#54503F;
+    --text-faint:#8C8571;
+    --teal:#286760;
+    --amber:#8C5E17;
+    --rust:#93392A;
+    --blue:#2A5478;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    --serif: 'IBM Plex Serif', Georgia, serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);}
+  ::selection{background:var(--teal);color:#FBFAF6;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{
+    border-bottom:1px solid var(--border);
+    padding:14px 0 12px;
+  }
+  .masthead-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .wordmark{
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    color:var(--text-primary);
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .wordmark .dot{color:var(--teal);}
+  .tagline{
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+  .scan-status{
+    text-align:right;
+    font-size:11px;
+    color:var(--text-dim);
+    line-height:1.7;
+  }
+  .scan-status .live-dot{
+    display:inline-block;
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--teal);
+    margin-right:6px;
+    box-shadow:0 0 6px var(--teal);
+  }
+  .scan-status b{color:var(--text-primary);font-weight:600;}
+
+  /* ---------- DEMO BANNER ---------- */
+  .demo-banner{
+    background:var(--bg-inset);
+    border-bottom:1px dashed var(--border-bright);
+    padding:6px 0;
+    font-size:10.5px;
+    color:var(--text-faint);
+    text-align:center;
+    letter-spacing:0.5px;
+  }
+  .demo-banner b{color:var(--amber);}
+
+  /* ---------- LAYOUT ---------- */
+  .main-layout{
+    padding:14px 0 40px;
+  }
+
+  .section-label{
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 0 8px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+
+  /* ---------- EVENT CARDS ---------- */
+  .event-list{display:flex;flex-direction:column;gap:8px;}
+
+  .card{
+    background:var(--bg-panel);
+    border:2px solid var(--border-bright);
+  }
+  .card-head{
+    padding:9px 12px 8px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .company-block .company{
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:0.2px;
+  }
+  .company-block .ticker{
+    color:var(--text-faint);
+    font-size:11px;
+    margin-left:8px;
+  }
+  .tag-row{margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;}
+  .tag{
+    font-size:9.5px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    padding:2px 6px;
+    border:1px solid var(--border-bright);
+    color:var(--text-dim);
+  }
+  .tag.risk-low{color:var(--teal);border-color:var(--teal);}
+  .tag.risk-mid{color:var(--amber);border-color:var(--amber);}
+
+  .price-block{text-align:right;}
+  .price-delta{font-size:22px;font-weight:700;line-height:1.1;}
+  .price-delta.up{color:var(--text-primary);}
+  .price-now{font-size:12px;color:var(--text-dim);font-weight:500;margin-top:2px;}
+  .price-baseline{font-size:10px;color:var(--text-faint);margin-top:1px;}
+  .price-est{font-size:10.5px;color:var(--text-dim);margin-top:4px;padding-top:4px;border-top:1px solid var(--border);}
+  .price-est b{color:var(--text-primary);}
+  .price-pending{font-size:11px;color:var(--text-faint);line-height:1.4;font-style:italic;}
+
+  .empty-state{
+    border:1px dashed var(--border-bright);
+    padding:24px 18px;
+    text-align:center;
+    font-size:12px;
+    color:var(--text-faint);
+    line-height:1.6;
+  }
+
+  .card-body{padding:10px 12px 12px;}
+
+  .headline-quote{
+    font-family:var(--serif);
+    font-size:13.5px;
+    line-height:1.45;
+    color:var(--text-primary);
+    border-left:2px solid var(--border-bright);
+    padding-left:10px;
+    margin:0 0 9px;
+  }
+  .headline-src{
+    display:block;
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--text-faint);
+    margin-top:3px;
+    letter-spacing:0.3px;
+  }
+
+  /* confidence meter */
+  .meter-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:9px;
+  }
+  .meter-label{
+    font-size:10px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    white-space:nowrap;
+  }
+  .meter{
+    display:flex;
+    gap:3px;
+  }
+  .meter-seg{
+    width:14px;height:7px;
+    background:var(--bg-inset);
+    border:1px solid var(--border-bright);
+  }
+  .meter-seg.fill-low{background:var(--teal);border-color:var(--teal);}
+  .meter-seg.fill-mid{background:var(--amber);border-color:var(--amber);}
+  .meter-verdict{font-size:10.5px;font-weight:600;letter-spacing:0.3px;}
+  .meter-verdict.low{color:var(--teal);}
+  .meter-verdict.mid{color:var(--amber);}
+
+  /* analyst note */
+  .analyst-note{
+    background:var(--bg-inset);
+    border:1px solid var(--border);
+    padding:8px 10px;
+    margin-bottom:9px;
+  }
+  .analyst-note .note-head{
+    font-size:9.5px;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:5px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .analyst-note p{
+    font-family:var(--serif);
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--text-dim);
+    margin:0;
+  }
+
+  /* precedent */
+  .precedent-toggle{
+    background:none;
+    border:1px solid var(--border-bright);
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:0.4px;
+    padding:5px 10px;
+    cursor:pointer;
+    width:100%;
+    text-align:left;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .precedent-toggle:hover{border-color:var(--blue);color:var(--text-primary);}
+  .precedent-panel{
+    display:none;
+    padding:8px 2px 2px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:9px;
+  }
+  .precedent-panel.open{display:block;}
+  .precedent-item{
+    display:grid;
+    grid-template-columns:100px 1fr;
+    gap:10px;
+    padding:6px 0;
+    border-top:1px solid var(--bg-inset);
+    align-items:center;
+  }
+  .precedent-item:first-child{border-top:none;}
+  .prec-name{font-size:11.5px;font-weight:600;}
+  .prec-date{font-size:10px;color:var(--text-faint);margin-top:1px;}
+  .prec-outcome{font-size:10.5px;margin-top:3px;line-height:1.4;}
+  .prec-outcome.recovered{color:var(--teal);}
+  .prec-outcome.not-recovered{color:var(--rust);}
+  .spark{display:block;}
+
+  /* buy row */
+  .buy-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding-top:9px;
+    border-top:1px solid var(--border);
+    flex-wrap:wrap;
+  }
+  .position-info{font-size:11px;color:var(--text-dim);}
+  .position-info b{color:var(--text-primary);}
+  .position-info .roi-pos{color:var(--teal);font-weight:600;}
+  .position-info .roi-neg{color:var(--rust);font-weight:600;}
+
+  .btn{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.5px;
+    padding:9px 16px;
+    border:1px solid var(--blue);
+    background:transparent;
+    color:var(--blue);
+    cursor:pointer;
+    text-transform:uppercase;
+    transition:background 0.12s,color 0.12s;
+  }
+  .btn:hover{background:var(--blue);color:#FBFAF6;}
+  .btn.closed{
+    border-color:var(--border-bright);
+    color:var(--text-faint);
+    cursor:default;
+  }
+  .btn.closed:hover{background:transparent;color:var(--text-faint);}
+  .btn.open-pos{
+    border-color:var(--amber);
+    color:var(--amber);
+  }
+  .btn.open-pos:hover{background:var(--amber);color:#FBFAF6;}
+
+  /* ---------- PORTFOLIO ROW (bottom) ---------- */
+  .portfolio-row{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:8px;
+    align-items:start;
+  }
+  @media (max-width:820px){
+    .portfolio-row{grid-template-columns:1fr;}
+  }
+  .tally-card{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    padding:10px 12px;
+  }
+  .tally-title{
+    font-size:10px;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:8px;
+  }
+  .tally-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 8px;
+    margin-bottom:8px;
+  }
+  .tally-stat .num{
+    font-size:16px;
+    font-weight:700;
+  }
+  .tally-stat .num.pos{color:var(--teal);}
+  .tally-stat .num.neg{color:var(--rust);}
+  .tally-stat .lbl{
+    font-size:9px;
+    color:var(--text-faint);
+    letter-spacing:0.3px;
+    text-transform:uppercase;
+    margin-top:1px;
+  }
+  .ff-btn{
+    width:100%;
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:0.4px;
+    padding:7px;
+    background:var(--bg-inset);
+    border:1px solid var(--border-bright);
+    color:var(--text-primary);
+    cursor:pointer;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .ff-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .reset-btn{
+    width:100%;
+    font-family:var(--mono);
+    font-size:10px;
+    padding:5px;
+    background:none;
+    border:1px solid var(--border);
+    color:var(--text-faint);
+    cursor:pointer;
+  }
+  .reset-btn:hover{color:var(--text-dim);border-color:var(--border-bright);}
+
+  .log-card{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    padding:10px 12px;
+    font-size:11px;
+    color:var(--text-faint);
+    max-height:150px;
+    overflow-y:auto;
+  }
+  .log-card .tally-title{margin-bottom:6px;}
+  .log-entry{
+    padding:4px 0;
+    border-top:1px solid var(--bg-inset);
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .log-entry:first-child{border-top:none;}
+  .log-entry .roi-pos{color:var(--teal);}
+  .log-entry .roi-neg{color:var(--rust);}
+  .log-empty{color:var(--text-faint);font-style:normal;padding:4px 0;}
+
+  .disclaimer-card{
+    border:1px dashed var(--border-bright);
+    padding:10px 12px;
+    font-size:10.5px;
+    line-height:1.5;
+    color:var(--text-faint);
+  }
+  .disclaimer-card b{color:var(--text-dim);}
+
+  footer{
+    border-top:1px solid var(--border);
+    padding:20px 0 40px;
+    font-size:10.5px;
+    color:var(--text-faint);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">⚡ Live classifications from the daily scan pipeline. Price tracking &amp; historical precedent lookup are not wired up yet — mock buy is disabled until that's built.</div>
+
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <div>
+      <div class="wordmark">DOWNERS<span class="dot">_</span></div>
+      <div class="tagline">Confidence shocks · not fundamentals</div>
+    </div>
+    <div class="scan-status">
+      <div><span class="live-dot"></span>LAST SCAN <b>09:00 EST</b> · 34 HEADLINES REVIEWED · 3 FLAGGED</div>
+      <div>NEXT SCAN IN <b>14:52:06</b></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="main-layout">
+    <div class="section-label">Today's Flagged Events</div>
+    <div class="event-list" id="eventList"></div>
+
+    <div class="section-label" style="margin-top:20px;">Mock Portfolio Overview</div>
+    <div class="portfolio-row">
+      <div class="tally-card">
+        <div class="tally-title">Tally</div>
+        <div class="tally-grid">
+          <div class="tally-stat">
+            <div class="num" id="statCapital">$0</div>
+            <div class="lbl">Capital deployed</div>
+          </div>
+          <div class="tally-stat">
+            <div class="num" id="statRealized">$0</div>
+            <div class="lbl">Realized gain</div>
+          </div>
+          <div class="tally-stat">
+            <div class="num" id="statROI">0.0%</div>
+            <div class="lbl">Aggregate ROI</div>
+          </div>
+          <div class="tally-stat">
+            <div class="num" id="statWin">—</div>
+            <div class="lbl">Win rate</div>
+          </div>
+        </div>
+        <button class="ff-btn" id="ffBtn">▸ Advance 1 Day (simulate)</button>
+        <button class="reset-btn" id="resetBtn">Reset demo</button>
+      </div>
+
+      <div class="log-card">
+        <div class="tally-title">Closed Positions</div>
+        <div id="logList"><div class="log-empty">No positions closed yet.</div></div>
+      </div>
+
+      <div class="disclaimer-card">
+        <b>Not financial advice.</b> Classification is model-generated and imperfect. Historical pattern recovery does not guarantee future recovery. Mock trades are simulated only.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>DOWNERS · daily scan pipeline mockup · built for layout review</footer>
+
+<script>
+let events = [];
+const state = {};
+let closedPositions = [];
+let day = 0;
+
+const CATEGORY_LABELS = {
+  pr_scandal: "PR / Reputational",
+  executive_controversy: "Executive Controversy",
+  data_breach_or_cyberattack: "Data Breach / Cyberattack",
+  product_recall_scare: "Product Recall",
+  legal_news: "Legal / Regulatory",
+  fundamental_issue: "Fundamental Issue",
+  other: "Other"
+};
+
+function humanizeCategory(cat){
+  return CATEGORY_LABELS[cat] || (cat ? cat.replace(/_/g, " ") : "Uncategorized");
+}
+
+// Loads today's classified events from events.json (written by scan.py).
+// Only shows entries the classifier marked confident and low/medium
+// fundamental-impact risk (score <= 3) — i.e. likely confidence shocks,
+// not real fundamentals problems. Anything the model wasn't sure about,
+// or flagged as not relevant, is left out entirely.
+async function loadEvents(){
+  const list = document.getElementById("eventList");
+  try {
+    const res = await fetch("events.json", { cache: "no-store" });
+    if(!res.ok) throw new Error("events.json not found (" + res.status + ")");
+    const raw = await res.json();
+
+    events = raw
+      .filter(e => e.confident === true
+        && !e.error
+        && e.category && e.category !== "not_relevant"
+        && typeof e.fundamental_impact_score === "number"
+        && e.fundamental_impact_score <= 3)
+      .map((e, i) => ({
+        id: "ev" + i,
+        company: e.company || e.title,
+        ticker: e.ticker || "",
+        category: humanizeCategory(e.category),
+        score: e.fundamental_impact_score,
+        verdict: e.fundamental_impact_score <= 2 ? "low" : "mid",
+        headline: e.title,
+        source: e.source || "",
+        url: e.url || "",
+        reasoning: e.reasoning || "",
+        // Not yet wired up — price history and historical precedent
+        // lookup is a later phase of the pipeline.
+        basePrice: null,
+        precedents: null
+      }));
+
+    events.forEach(e => { state[e.id] = { live: null, position: null }; });
+
+    if(events.length === 0){
+      list.innerHTML = `<div class="empty-state">No confidence-shock events flagged in the latest scan. Check back after the next run.</div>`;
+    } else {
+      renderEvents();
+    }
+    renderTally();
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Couldn't load events.json (${err.message}). This page needs to be served alongside events.json — e.g. via GitHub Pages — rather than opened as a local file.</div>`;
+  }
+}
+
+function fmtMoney(n){
+  const sign = n < 0 ? "-" : "";
+  return sign + "$" + Math.abs(n).toFixed(2);
+}
+function fmtPct(n){
+  const sign = n > 0 ? "+" : "";
+  return sign + n.toFixed(1) + "%";
+}
+
+function meterHtml(score, verdict){
+  let segs = "";
+  for(let i=1;i<=5;i++){
+    const filled = i <= score;
+    const cls = filled ? (verdict === "low" ? "fill-low" : "fill-mid") : "";
+    segs += `<div class="meter-seg ${cls}"></div>`;
+  }
+  return segs;
+}
+
+function renderEvents(){
+  const list = document.getElementById("eventList");
+  list.innerHTML = "";
+  events.forEach(e => {
+    const s = state[e.id];
+    const hasPriceData = e.basePrice !== null && e.basePrice !== undefined;
+    const hasPrecedents = Array.isArray(e.precedents) && e.precedents.length > 0;
+    const verdictLabel = e.verdict === "low" ? "LOW RISK — LIKELY CONFIDENCE SHOCK" : "MEDIUM RISK — MONITOR";
+    const verdictCls = e.verdict === "low" ? "low" : "mid";
+    const tagCls = e.verdict === "low" ? "risk-low" : "risk-mid";
+
+    let priceBlockHtml;
+    if(hasPriceData){
+      const upside = ((e.basePrice - s.live) / s.live * 100);
+      priceBlockHtml = `
+        <div class="price-delta up">+${upside.toFixed(1)}%</div>
+        <div class="price-now">if recovers to pre-event</div>
+        <div class="price-baseline">now ${fmtMoney(s.live)} → pre-event ${fmtMoney(e.basePrice)}</div>
+        <div class="price-est">est. recovery: <b>${e.estRecovery}</b></div>
+      `;
+    } else {
+      priceBlockHtml = `<div class="price-pending">Price tracking<br>not yet connected</div>`;
+    }
+
+    let buyRowHtml;
+    if(!hasPriceData){
+      buyRowHtml = `
+        <div class="position-info">Mock buy needs live price data</div>
+        <button class="btn closed" disabled>Coming soon</button>
+      `;
+    } else if(!s.position){
+      buyRowHtml = `
+        <div class="position-info">No position open</div>
+        <button class="btn" onclick="mockBuy('${e.id}')">Mock Buy @ ${fmtMoney(s.live)}</button>
+      `;
+    } else if(s.position.closed){
+      const roiCls = s.position.roi >= 0 ? "roi-pos" : "roi-neg";
+      buyRowHtml = `
+        <div class="position-info">Closed — bought <b>${fmtMoney(s.position.buyPrice)}</b>, sold <b>${fmtMoney(s.position.sellPrice)}</b> · <span class="${roiCls}">${fmtPct(s.position.roi)}</span></div>
+        <button class="btn closed">Position closed</button>
+      `;
+    } else {
+      buyRowHtml = `
+        <div class="position-info">Open — bought <b>${fmtMoney(s.position.buyPrice)}</b>, now <b>${fmtMoney(s.live)}</b></div>
+        <button class="btn open-pos" disabled>Awaiting recovery…</button>
+      `;
+    }
+
+    let precedentSectionHtml = "";
+    if(hasPrecedents){
+      const precedentsHtml = e.precedents.map(p => `
+        <div class="precedent-item">
+          <svg class="spark" width="120" height="40" viewBox="0 0 120 40">
+            <path d="${p.spark}" fill="none" stroke="${p.outcome === 'recovered' ? 'var(--teal)' : 'var(--rust)'}" stroke-width="2"/>
+          </svg>
+          <div>
+            <div class="prec-name">${p.name}</div>
+            <div class="prec-date">${p.date}</div>
+            <div class="prec-outcome ${p.outcome}">${p.outcome === 'recovered' ? '✓ Recovered' : '✗ Did not recover'} — ${p.note}</div>
+          </div>
+        </div>
+      `).join("");
+      precedentSectionHtml = `
+        <button class="precedent-toggle" onclick="togglePrecedent('${e.id}')">
+          <span>▸ Historical precedent (${e.precedents.length})</span>
+          <span id="pchevron-${e.id}">＋</span>
+        </button>
+        <div class="precedent-panel" id="ppanel-${e.id}">
+          ${precedentsHtml}
+        </div>
+      `;
+    }
+
+    const headlineLink = e.url
+      ? `<a href="${e.url}" target="_blank" rel="noopener">${e.headline}</a>`
+      : e.headline;
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="card-head">
+        <div class="company-block">
+          <span class="company">${e.company}</span>${e.ticker ? `<span class="ticker">${e.ticker}</span>` : ""}
+          <div class="tag-row">
+            <span class="tag ${tagCls}">${e.category}</span>
+          </div>
+        </div>
+        <div class="price-block">
+          ${priceBlockHtml}
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="headline-quote">${headlineLink}<span class="headline-src">${e.source}</span></p>
+
+        <div class="meter-row">
+          <span class="meter-label">Fundamental impact</span>
+          <div class="meter">${meterHtml(e.score, e.verdict)}</div>
+          <span class="meter-verdict ${verdictCls}">${verdictLabel}</span>
+        </div>
+
+        <div class="analyst-note">
+          <div class="note-head"><span>ANALYST NOTE — WHY FLAGGED</span><span>score ${e.score}/5</span></div>
+          <p>${e.reasoning}</p>
+        </div>
+
+        ${precedentSectionHtml}
+
+        <div class="buy-row">
+          ${buyRowHtml}
+        </div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function togglePrecedent(id){
+  const panel = document.getElementById("ppanel-" + id);
+  const chevron = document.getElementById("pchevron-" + id);
+  panel.classList.toggle("open");
+  chevron.textContent = panel.classList.contains("open") ? "－" : "＋";
+}
+
+function mockBuy(id){
+  const s = state[id];
+  s.position = { buyPrice: s.live, buyDay: day, closed: false };
+  renderEvents();
+}
+
+function advanceDay(){
+  day++;
+  events.filter(e => e.basePrice !== null && e.basePrice !== undefined).forEach(e => {
+    const s = state[e.id];
+    // drift live price toward baseline with some noise
+    const gap = e.basePrice - s.live;
+    const step = gap * (0.12 + Math.random() * 0.10);
+    s.live = Math.round((s.live + step + (Math.random()-0.5)*0.3) * 100) / 100;
+
+    if(s.position && !s.position.closed && s.live >= e.basePrice){
+      s.position.closed = true;
+      s.position.sellPrice = s.live;
+      s.position.roi = ((s.position.sellPrice - s.position.buyPrice) / s.position.buyPrice) * 100;
+      closedPositions.push({
+        company: e.company, ticker: e.ticker,
+        buyPrice: s.position.buyPrice, sellPrice: s.position.sellPrice,
+        roi: s.position.roi
+      });
+    }
+  });
+  renderEvents();
+  renderTally();
+}
+
+function renderTally(){
+  const capital = closedPositions.reduce((sum,p) => sum + p.buyPrice, 0) +
+    events.reduce((sum,e) => sum + (state[e.id].position && !state[e.id].position.closed ? state[e.id].position.buyPrice : 0), 0);
+  const realized = closedPositions.reduce((sum,p) => sum + (p.sellPrice - p.buyPrice), 0);
+  const realizedCapital = closedPositions.reduce((sum,p) => sum + p.buyPrice, 0);
+  const roi = realizedCapital > 0 ? (realized / realizedCapital) * 100 : 0;
+  const wins = closedPositions.filter(p => p.roi >= 0).length;
+
+  document.getElementById("statCapital").textContent = fmtMoney(capital).replace("$-","-$");
+  const realizedEl = document.getElementById("statRealized");
+  realizedEl.textContent = fmtMoney(realized);
+  realizedEl.className = "num " + (realized >= 0 ? "pos" : "neg");
+  const roiEl = document.getElementById("statROI");
+  roiEl.textContent = fmtPct(roi);
+  roiEl.className = "num " + (roi >= 0 ? "pos" : "neg");
+  document.getElementById("statWin").textContent = closedPositions.length > 0
+    ? Math.round((wins/closedPositions.length)*100) + "%"
+    : "—";
+
+  const logList = document.getElementById("logList");
+  if(closedPositions.length === 0){
+    logList.innerHTML = `<div class="log-empty">No positions closed yet.</div>`;
+  } else {
+    logList.innerHTML = closedPositions.slice().reverse().map(p => `
+      <div class="log-entry">
+        <span>${p.ticker}</span>
+        <span class="${p.roi >= 0 ? 'roi-pos' : 'roi-neg'}">${fmtPct(p.roi)}</span>
+      </div>
+    `).join("");
+  }
+}
+
+document.getElementById("ffBtn").addEventListener("click", advanceDay);
+document.getElementById("resetBtn").addEventListener("click", () => {
+  events.forEach(e => {
+    if(e.basePrice !== null && e.basePrice !== undefined){
+      state[e.id] = { live: e.dropPrice, position: null };
+    }
+  });
+  closedPositions = [];
+  day = 0;
+  renderEvents();
+  renderTally();
+});
+
+loadEvents();
+</script>
+
+</body>
+</html>

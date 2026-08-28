@@ -1,8 +1,73 @@
 {
-  "generated_at": "2026-08-28T21:56:52Z",
+  "generated_at": "2026-08-28T21:59:19Z",
   "headlines_reviewed": 10,
-  "flagged_count": 1,
+  "flagged_count": 0,
   "events": [
+    {
+      "title": "Everett Harris & Co. CA Acquires New Stake in Tesla, Inc. $TSLA",
+      "description": "Everett Harris & Co. CA bought a new position in Tesla, Inc. (NASDAQ:TSLA \u2013 Free Report) during the second quarter, according to the company in its most recent filing with the Securities & Exchange Commission. The firm bought 2,799 shares of the electric vehicle producer\u2019s stock, valued at approximately $1,177,000. A number of other large [...]",
+      "url": "https://www.americanbankingnews.com/2026/08/28/everett-harris-co-ca-acquires-new-stake-in-tesla-inc-tsla.html",
+      "source": "americanbankingnews",
+      "pubDate": "2026-08-28 09:56:37",
+      "company": "Tesla, Inc.",
+      "ticker": "TSLA",
+      "category": "not_relevant",
+      "fundamental_impact_score": 1,
+      "reasoning": "This headline reports normal institutional investment activity, specifically an institutional buyer taking a new stake in the company. It contains no news regarding a scandal, controversy, or drop in stock price, meaning it is entirely irrelevant to the Downers project.",
+      "confident": true
+    },
+    {
+      "title": "GE Vernova Inc. $GEV Shares Acquired by Cibc World Market Inc.",
+      "description": "Cibc World Market Inc. lifted its position in shares of GE Vernova Inc. (NYSE:GEV \u2013 Free Report) by 23.5% in the 2nd quarter, according to the company in its most recent 13F filing with the Securities and Exchange Commission. The fund owned 126,827 shares of the company\u2019s stock after purchasing an additional 24,138 shares during [...]",
+      "url": "https://www.americanbankingnews.com/2026/08/28/ge-vernova-inc-gev-shares-acquired-by-cibc-world-market-inc.html",
+      "source": "americanbankingnews",
+      "pubDate": "2026-08-28 09:56:31",
+      "company": "GE Vernova Inc.",
+      "ticker": "GEV",
+      "category": "not_relevant",
+      "fundamental_impact_score": 1,
+      "reasoning": "This headline reports normal institutional trading activity and portfolio adjustments rather than a corporate scandal, PR issue, or fundamental business problem. It does not fit the Downers project criteria because it describes a routine 13F filing disclosure rather than a confidence shock.",
+      "confident": true
+    },
+    {
+      "title": "7,939 Shares in Tesla, Inc. $TSLA Acquired by Bryn Mawr Trust Advisors LLC",
+      "description": "Bryn Mawr Trust Advisors LLC acquired a new stake in shares of Tesla, Inc. (NASDAQ:TSLA \u2013 Free Report) in the second quarter, according to the company in its most recent 13F filing with the Securities and Exchange Commission. The fund acquired 7,939 shares of the electric vehicle producer\u2019s stock, valued at approximately $3,339,000. A number [...]",
+      "url": "https://www.americanbankingnews.com/2026/08/28/7939-shares-in-tesla-inc-tsla-acquired-by-bryn-mawr-trust-advisors-llc.html",
+      "source": "americanbankingnews",
+      "pubDate": "2026-08-28 09:56:30",
+      "company": "Tesla, Inc.",
+      "ticker": "TSLA",
+      "category": "not_relevant",
+      "fundamental_impact_score": 1,
+      "reasoning": "This headline reports routine institutional buying and portfolio adjustments rather than any negative news, scandal, or fundamental business problem. It has no relevance to a confidence shock or a stock drop.",
+      "confident": true
+    },
+    {
+      "title": "Cornerstone Capital Inc. Acquires New Shares in Tesla, Inc. $TSLA",
+      "description": "Cornerstone Capital Inc. purchased a new stake in shares of Tesla, Inc. (NASDAQ:TSLA \u2013 Free Report) in the 2nd quarter, according to its most recent filing with the Securities and Exchange Commission. The fund purchased 2,337 shares of the electric vehicle producer\u2019s stock, valued at approximately $983,000. Several other hedge funds and other institutional investors [...]",
+      "url": "https://www.americanbankingnews.com/2026/08/28/cornerstone-capital-inc-acquires-new-shares-in-tesla-inc-tsla.html",
+      "source": "americanbankingnews",
+      "pubDate": "2026-08-28 09:56:27",
+      "company": "Tesla, Inc.",
+      "ticker": "TSLA",
+      "category": "not_relevant",
+      "fundamental_impact_score": 1,
+      "reasoning": "This headline reports routine institutional buying and portfolio changes rather than any corporate scandal, controversy, or fundamental business problem. It does not represent a reputational shock or a business issue, making it completely irrelevant to the Downers project.",
+      "confident": true
+    },
+    {
+      "title": "1,500 Shares in GE Vernova Inc. $GEV Bought by Clal Insurance Enterprises Holdings Ltd",
+      "description": "Clal Insurance Enterprises Holdings Ltd purchased a new stake in shares of GE Vernova Inc. (NYSE:GEV \u2013 Free Report) during the 2nd quarter, according to the company in its most recent 13F filing with the Securities & Exchange Commission. The firm purchased 1,500 shares of the company\u2019s stock, valued at approximately $1,763,000. A number of [...]",
+      "url": "https://www.americanbankingnews.com/2026/08/28/1500-shares-in-ge-vernova-inc-gev-bought-by-clal-insurance-enterprises-holdings-ltd.html",
+      "source": "americanbankingnews",
+      "pubDate": "2026-08-28 09:56:25",
+      "company": "GE Vernova Inc.",
+      "ticker": "GEV",
+      "category": "not_relevant",
+      "fundamental_impact_score": 1,
+      "reasoning": "This headline reports routine institutional buying of stock based on a recent 13F filing. It contains no news about a scandal, controversy, or fundamental business problem.",
+      "confident": true
+    },
     {
       "title": "Brasada Capital Management LP Purchases Shares of 61,699 Boston Scientific Corporation $BSX",
       "description": "Brasada Capital Management LP purchased a new position in shares of Boston Scientific Corporation (NYSE:BSX \u2013 Free Report) in the 2nd quarter, according to the company in its most recent disclosure with the Securities and Exchange Commission (SEC). The fund purchased 61,699 shares of the medical equipment provider\u2019s stock, valued at approximately $2,633,000. A number [...]",
@@ -13,7 +78,7 @@
       "ticker": "BSX",
       "category": "not_relevant",
       "fundamental_impact_score": 1,
-      "reasoning": "This headline reports normal institutional buying activity, specifically a hedge fund acquiring shares in the company. There is no negative news, scandal, or fundamental business problem described here. Therefore, it is completely irrelevant to the Downers project.",
+      "reasoning": "This headline reports standard institutional buying activity rather than a reputational shock or a negative event. It has nothing to do with a stock drop or a scandal, making it irrelevant to the Downers project.",
       "confident": true
     },
     {
@@ -26,7 +91,7 @@
       "ticker": "TSLA",
       "category": "not_relevant",
       "fundamental_impact_score": 5,
-      "reasoning": "This headline is purely about technical analysis, chart patterns, and momentum indicators like the MACD histogram and resistance bands. It contains no news regarding PR scandals, executive issues, or fundamental business operations. Therefore, it is entirely irrelevant to the Downers project.",
+      "reasoning": "This headline discusses technical stock indicators like the MACD histogram and price resistance levels rather than a company-specific reputational event or fundamental business problem. It is routine market commentary and trading analysis, which falls outside the scope of Downers.",
       "confident": true
     },
     {
@@ -39,7 +104,7 @@
       "ticker": "SNAP",
       "category": "fundamental_issue",
       "fundamental_impact_score": 4,
-      "reasoning": "The headline and description discuss a general stock price decline without mentioning a specific headline-grabbing scandal, PR gaffe, or one-off confidence shock. Price drops of this magnitude on low relative volume in the absence of a named catalyst often reflect broader market sentiment or ongoing underlying fundamental concerns.",
+      "reasoning": "The headline and description discuss a general stock price decline and share volume fluctuations without mentioning a specific headline-grabbing scandal, PR gaffe, or executive controversy. Without a clear transitory shock, a double-digit or significant percentage drop is more typical of broader market sentiment, weak underlying performance, or valuation adjustments.",
       "confident": true
     },
     {
@@ -52,7 +117,7 @@
       "ticker": "GOOG",
       "category": "not_relevant",
       "fundamental_impact_score": 1,
-      "reasoning": "This headline reports routine institutional buying and portfolio adjustments based on a regulatory filing. It contains no news about scandals, PR gaffes, or fundamental business changes that would cause a stock drop. Therefore, it is completely irrelevant to the Downers project.",
+      "reasoning": "This headline reports normal institutional buying activity based on a recent Form 13F filing. It does not describe any negative scandal, controversy, or fundamental business problem causing a stock drop.",
       "confident": true
     },
     {
@@ -65,323 +130,7 @@
       "ticker": "GOOG",
       "category": "not_relevant",
       "fundamental_impact_score": 1,
-      "reasoning": "This headline simply reports on an institutional investment manager trimming its position in Alphabet. It contains no news regarding a scandal, PR gaffe, controversy, or fundamental business change.",
-      "confident": true
-    },
-    {
-      "title": "YouTube Faces Potential Lawsuit from FTC As Regulator Probes Whether It Broke Its Own Policies on Suspended Accounts: Report",
-      "description": "The U.S. Federal Trade Commission (FTC) is reportedly investigating Alphabet Inc. \u2018s (NASDAQ: GOOG ) (NASDAQ: GOOGL ) YouTube for a potential violation of consumer protection laws after it suspended users\u2019 accounts.",
-      "url": "https://us.headtopics.com/news/youtube-faces-potential-lawsuit-from-ftc-as-regulator-87127822",
-      "source": "headtopics",
-      "pubDate": "2026-08-28 09:36:52",
-      "company": "Alphabet Inc.",
-      "ticker": "GOOGL",
-      "category": "legal_news",
-      "fundamental_impact_score": 1,
-      "reasoning": "An FTC investigation and potential lawsuit regarding account suspension policies represent a regulatory and headline risk rather than a structural threat to YouTube's core advertising revenue or business model. Even if a fine is eventually levied, it will be negligible relative to Alphabet's massive cash flows and will not impair the underlying fundamentals of the business.",
-      "confident": true,
-      "base_price": 340.65,
-      "base_price_date": "2026-08-27",
-      "avg_base_price_15d": 345.83,
-      "avg_base_days_used": 15,
-      "current_price": 346.59,
-      "current_price_date": "2026-08-28",
-      "trend_5y": [
-        {
-          "date": "2021-09",
-          "close": 132.5
-        },
-        {
-          "date": "2021-10",
-          "close": 146.74
-        },
-        {
-          "date": "2021-11",
-          "close": 140.65
-        },
-        {
-          "date": "2021-12",
-          "close": 143.58
-        },
-        {
-          "date": "2022-01",
-          "close": 134.11
-        },
-        {
-          "date": "2022-02",
-          "close": 133.87
-        },
-        {
-          "date": "2022-03",
-          "close": 137.85
-        },
-        {
-          "date": "2022-04",
-          "close": 113.11
-        },
-        {
-          "date": "2022-05",
-          "close": 112.76
-        },
-        {
-          "date": "2022-06",
-          "close": 108.01
-        },
-        {
-          "date": "2022-07",
-          "close": 115.3
-        },
-        {
-          "date": "2022-08",
-          "close": 107.27
-        },
-        {
-          "date": "2022-09",
-          "close": 94.81
-        },
-        {
-          "date": "2022-10",
-          "close": 93.68
-        },
-        {
-          "date": "2022-11",
-          "close": 100.1
-        },
-        {
-          "date": "2022-12",
-          "close": 87.45
-        },
-        {
-          "date": "2023-01",
-          "close": 97.97
-        },
-        {
-          "date": "2023-02",
-          "close": 89.27
-        },
-        {
-          "date": "2023-03",
-          "close": 102.82
-        },
-        {
-          "date": "2023-04",
-          "close": 106.4
-        },
-        {
-          "date": "2023-05",
-          "close": 121.79
-        },
-        {
-          "date": "2023-06",
-          "close": 118.65
-        },
-        {
-          "date": "2023-07",
-          "close": 131.55
-        },
-        {
-          "date": "2023-08",
-          "close": 134.97
-        },
-        {
-          "date": "2023-09",
-          "close": 129.71
-        },
-        {
-          "date": "2023-10",
-          "close": 122.99
-        },
-        {
-          "date": "2023-11",
-          "close": 131.37
-        },
-        {
-          "date": "2023-12",
-          "close": 138.46
-        },
-        {
-          "date": "2024-01",
-          "close": 138.87
-        },
-        {
-          "date": "2024-02",
-          "close": 137.24
-        },
-        {
-          "date": "2024-03",
-          "close": 149.6
-        },
-        {
-          "date": "2024-04",
-          "close": 161.35
-        },
-        {
-          "date": "2024-05",
-          "close": 170.98
-        },
-        {
-          "date": "2024-06",
-          "close": 180.76
-        },
-        {
-          "date": "2024-07",
-          "close": 170.23
-        },
-        {
-          "date": "2024-08",
-          "close": 162.13
-        },
-        {
-          "date": "2024-09",
-          "close": 164.8
-        },
-        {
-          "date": "2024-10",
-          "close": 170.03
-        },
-        {
-          "date": "2024-11",
-          "close": 167.88
-        },
-        {
-          "date": "2024-12",
-          "close": 188.32
-        },
-        {
-          "date": "2025-01",
-          "close": 202.96
-        },
-        {
-          "date": "2025-02",
-          "close": 169.4
-        },
-        {
-          "date": "2025-03",
-          "close": 154.01
-        },
-        {
-          "date": "2025-04",
-          "close": 158.16
-        },
-        {
-          "date": "2025-05",
-          "close": 171.04
-        },
-        {
-          "date": "2025-06",
-          "close": 175.73
-        },
-        {
-          "date": "2025-07",
-          "close": 191.35
-        },
-        {
-          "date": "2025-08",
-          "close": 212.3
-        },
-        {
-          "date": "2025-09",
-          "close": 242.63
-        },
-        {
-          "date": "2025-10",
-          "close": 280.64
-        },
-        {
-          "date": "2025-11",
-          "close": 319.55
-        },
-        {
-          "date": "2025-12",
-          "close": 312.59
-        },
-        {
-          "date": "2026-01",
-          "close": 337.56
-        },
-        {
-          "date": "2026-02",
-          "close": 311.35
-        },
-        {
-          "date": "2026-03",
-          "close": 287.39
-        },
-        {
-          "date": "2026-04",
-          "close": 384.57
-        },
-        {
-          "date": "2026-05",
-          "close": 380.11
-        },
-        {
-          "date": "2026-06",
-          "close": 357.37
-        },
-        {
-          "date": "2026-07",
-          "close": 356.13
-        },
-        {
-          "date": "2026-08",
-          "close": 346.59
-        }
-      ],
-      "volatility_pct": 98.2,
-      "volatility_52w_high": 408.61,
-      "volatility_52w_low": 206.2
-    },
-    {
-      "title": "Plato Investment Management Ltd Invests $11.67 Million in Costco Wholesale Corporation $COST",
-      "description": "Plato Investment Management Ltd purchased a new position in Costco Wholesale Corporation (NASDAQ:COST \u2013 Free Report) in the second quarter, according to its most recent filing with the Securities & Exchange Commission. The firm purchased 12,544 shares of the retailer\u2019s stock, valued at approximately $11,666,000. Costco Wholesale makes up about 0.7% of Plato Investment Management [...]",
-      "url": "https://www.themarketsdaily.com/2026/08/28/plato-investment-management-ltd-invests-11-67-million-in-costco-wholesale-corporation-cost.html",
-      "source": "themarketsdaily",
-      "pubDate": "2026-08-28 09:34:06",
-      "company": "Costco Wholesale Corporation",
-      "ticker": "COST",
-      "category": "not_relevant",
-      "fundamental_impact_score": 1,
-      "reasoning": "This headline reports normal institutional investment activity, specifically a new stake purchased in the company. It does not describe a scandal, PR gaffe, or any negative event causing a stock drop. Therefore, it is entirely irrelevant to the Downers project.",
-      "confident": true
-    },
-    {
-      "title": "TFR Capital LLC. Has $8.29 Million Stock Position in Alphabet Inc. $GOOGL",
-      "description": "TFR Capital LLC. reduced its stake in Alphabet Inc. (NASDAQ:GOOGL \u2013 Free Report) by 8.1% during the 2nd quarter, according to its most recent 13F filing with the Securities & Exchange Commission. The fund owned 23,195 shares of the information services provider\u2019s stock after selling 2,038 shares during the period. Alphabet accounts for approximately 2.3% [...]",
-      "url": "https://www.themarketsdaily.com/2026/08/28/tfr-capital-llc-has-8-29-million-stock-position-in-alphabet-inc-googl.html",
-      "source": "themarketsdaily",
-      "pubDate": "2026-08-28 09:34:00",
-      "company": "Alphabet Inc.",
-      "ticker": "GOOGL",
-      "category": "not_relevant",
-      "fundamental_impact_score": 5,
-      "reasoning": "This headline describes routine institutional portfolio management, specifically a minor stake reduction by an investment firm, rather than a scandal or crisis. It contains no news about a reputational shock, PR gaffe, or fundamental business deterioration.",
-      "confident": true
-    },
-    {
-      "title": "Alphabet Inc. $GOOGL Stake Trimmed by Tevis Investment Management",
-      "description": "Tevis Investment Management reduced its position in Alphabet Inc. (NASDAQ:GOOGL \u2013 Free Report) by 12.6% in the second quarter, according to the company in its most recent Form 13F filing with the Securities and Exchange Commission (SEC). The firm owned 15,235 shares of the information services provider\u2019s stock after selling 2,201 shares during the quarter. [...]",
-      "url": "https://www.themarketsdaily.com/2026/08/28/alphabet-inc-googl-stake-trimmed-by-tevis-investment-management.html",
-      "source": "themarketsdaily",
-      "pubDate": "2026-08-28 09:33:54",
-      "company": "Alphabet Inc.",
-      "ticker": "GOOGL",
-      "category": "not_relevant",
-      "fundamental_impact_score": 1,
-      "reasoning": "This headline describes routine portfolio rebalancing by an institutional investor filing a 13F, rather than a scandal, PR gaffe, or fundamental business problem. Institutional buying and selling happens constantly and does not represent a reputational shock or a core business issue for Alphabet.",
-      "confident": true
-    },
-    {
-      "title": "Meridian Wealth Management LLC Has $69.40 Million Stake in Alphabet Inc. $GOOGL",
-      "description": "Meridian Wealth Management LLC decreased its stake in Alphabet Inc. (NASDAQ:GOOGL \u2013 Free Report) by 3.1% in the second quarter, according to the company in its most recent Form 13F filing with the Securities & Exchange Commission. The institutional investor owned 194,206 shares of the information services provider\u2019s stock after selling 6,313 shares during the [...]",
-      "url": "https://www.themarketsdaily.com/2026/08/28/meridian-wealth-management-llc-has-69-40-million-stake-in-alphabet-inc-googl.html",
-      "source": "themarketsdaily",
-      "pubDate": "2026-08-28 09:33:50",
-      "company": "Alphabet Inc.",
-      "ticker": "GOOGL",
-      "category": "not_relevant",
-      "fundamental_impact_score": 5,
-      "reasoning": "This headline reports standard institutional portfolio adjustments from an SEC Form 13F filing, not a scandal or negative event. It describes a routine 3.1% stake reduction by a wealth manager, which carries zero reputational shock or fundamental business problem.",
+      "reasoning": "This headline simply reports that an institutional investment firm reduced its stake in Alphabet during the second quarter. It is a routine portfolio adjustment filing and does not represent a reputational shock, scandal, or fundamental business issue.",
       "confident": true
     }
   ]

@@ -12,7 +12,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Free tier allows 5 requests/minute for this model.
 # 13 seconds between calls keeps us safely under that.
-SECONDS_BETWEEN_CALLS = 13
+SECONDS_BETWEEN_CALLS = 5
 
 def fetch_headlines():
     url = "https://newsdata.io/api/1/news"
@@ -58,7 +58,7 @@ def classify_headline(headline, max_retries=3):
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model="gemini-3.6-flash",
+                model="gemini-3.5-flash-lite",
                 contents=prompt
             )
             text = response.text.strip()

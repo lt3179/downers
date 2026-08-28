@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import statistics
 from datetime import datetime, timedelta
 import requests
 import yfinance as yf
@@ -132,10 +133,17 @@ def parse_pub_date(pub_date_str):
         return datetime.utcnow()
 
 def get_price_data(ticker, pub_date_str):
+    """
+    base_price: closing price on the previous trading day before the event
+    avg_base_price_15d: average close over the 15 trading days before the event
+    volatility_pct: coefficient of variation over that same 15-day window —
+      a rough measure of how steady vs. choppy the stock has been recently
+      (lower = steadier, higher = more erratic)
+    """
     event_date = parse_pub_date(pub_date_str)
     try:
         stock = yf.Ticker(ticker)
-        start = event_date - timedelta(days=15)
+        start = event_date - timedelta(days=30)
         end = datetime.utcnow() + timedelta(days=1)
         hist = stock.history(start=start, end=end)
 
@@ -154,9 +162,16 @@ def get_price_data(ticker, pub_date_str):
         base_price = round(float(before_event["Close"].iloc[-1]), 2)
         base_price_date = before_event.index[-1].strftime("%Y-%m-%d")
 
-        last_n = before_event["Close"].tail(3)
-        avg_base_price_3d = round(float(last_n.mean()), 2)
-        avg_base_days_used = int(len(last_n))
+        window = before_event["Close"].tail(15)
+        avg_base_price_15d = round(float(window.mean()), 2)
+        avg_base_days_used = int(len(window))
+
+        volatility_pct = None
+        if len(window) >= 2:
+            stdev = statistics.stdev(window.tolist())
+            mean = float(window.mean())
+            if mean > 0:
+                volatility_pct = round((stdev / mean) * 100, 2)
 
         current_price = round(float(hist["Close"].iloc[-1]), 2)
         current_price_date = hist.index[-1].strftime("%Y-%m-%d")
@@ -164,8 +179,9 @@ def get_price_data(ticker, pub_date_str):
         return {
             "base_price": base_price,
             "base_price_date": base_price_date,
-            "avg_base_price_3d": avg_base_price_3d,
+            "avg_base_price_15d": avg_base_price_15d,
             "avg_base_days_used": avg_base_days_used,
+            "volatility_pct": volatility_pct,
             "current_price": current_price,
             "current_price_date": current_price_date
         }
@@ -190,6 +206,8 @@ def get_five_year_trend(ticker):
 def main():
     headlines = fetch_headlines()
     results = []
+    flagged_count = 0
+
     for i, h in enumerate(headlines):
         print(f"Classifying {i + 1}/{len(headlines)}: {h['title'][:60]}")
         classification = classify_headline(h)
@@ -203,10 +221,10 @@ def main():
         )
 
         if is_flagged:
+            flagged_count += 1
             lookup_ticker = merged.get("ticker")
 
             if not lookup_ticker:
-                # No direct ticker — see if a publicly traded proxy makes sense.
                 time.sleep(SECONDS_BETWEEN_CALLS)
                 sub = find_substitute_ticker(h, merged.get("company"))
                 if sub.get("has_substitute") and sub.get("substitute_ticker"):
@@ -228,10 +246,17 @@ def main():
         if i < len(headlines) - 1:
             time.sleep(SECONDS_BETWEEN_CALLS)
 
-    with open("events.json", "w") as f:
-        json.dump(results, f, indent=2)
+    output = {
+        "generated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "headlines_reviewed": len(headlines),
+        "flagged_count": flagged_count,
+        "events": results
+    }
 
-    print(f"Processed {len(headlines)} headlines. Saved to events.json")
+    with open("events.json", "w") as f:
+        json.dump(output, f, indent=2)
+
+    print(f"Processed {len(headlines)} headlines, {flagged_count} flagged. Saved to events.json")
 
 if __name__ == "__main__":
     main()

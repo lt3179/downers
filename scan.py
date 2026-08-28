@@ -1,7 +1,6 @@
 import os
 import json
 import time
-import statistics
 from datetime import datetime, timedelta
 import requests
 import yfinance as yf
@@ -166,13 +165,6 @@ def get_price_data(ticker, pub_date_str):
         avg_base_price_15d = round(float(window.mean()), 2)
         avg_base_days_used = int(len(window))
 
-        volatility_pct = None
-        if len(window) >= 2:
-            stdev = statistics.stdev(window.tolist())
-            mean = float(window.mean())
-            if mean > 0:
-                volatility_pct = round((stdev / mean) * 100, 2)
-
         current_price = round(float(hist["Close"].iloc[-1]), 2)
         current_price_date = hist.index[-1].strftime("%Y-%m-%d")
 
@@ -181,13 +173,34 @@ def get_price_data(ticker, pub_date_str):
             "base_price_date": base_price_date,
             "avg_base_price_15d": avg_base_price_15d,
             "avg_base_days_used": avg_base_days_used,
-            "volatility_pct": volatility_pct,
             "current_price": current_price,
             "current_price_date": current_price_date
         }
     except Exception as e:
         return {"base_price": None, "current_price": None,
                 "price_error": f"Price lookup failed: {str(e)}"}
+
+def get_year_volatility(ticker):
+    """
+    A convenient 1-year volatility proxy using yfinance's built-in 52-week
+    high/low (from ticker.info) rather than computing standard deviation
+    ourselves — the spread from low to high, as a percent of the low.
+    """
+    try:
+        stock = yf.Ticker(ticker)
+        info = stock.info
+        high = info.get("fiftyTwoWeekHigh")
+        low = info.get("fiftyTwoWeekLow")
+        if high is None or low is None or low == 0:
+            return {"volatility_pct": None, "volatility_error": "52-week range unavailable"}
+        volatility_pct = round((high - low) / low * 100, 1)
+        return {
+            "volatility_pct": volatility_pct,
+            "volatility_52w_high": round(float(high), 2),
+            "volatility_52w_low": round(float(low), 2)
+        }
+    except Exception as e:
+        return {"volatility_pct": None, "volatility_error": f"Volatility lookup failed: {str(e)}"}
 
 def get_five_year_trend(ticker):
     try:

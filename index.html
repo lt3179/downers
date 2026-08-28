@@ -5,24 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Downers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F1EFE8;
-    --bg-panel:#FBFAF6;
-    --bg-panel-alt:#F5F3EC;
-    --bg-inset:#E9E5DA;
-    --border:#D2CCBC;
-    --border-bright:#AFA792;
-    --text-primary:#211E18;
-    --text-dim:#54503F;
-    --text-faint:#8C8571;
-    --teal:#286760;
-    --amber:#8C5E17;
-    --rust:#93392A;
-    --blue:#2A5478;
-    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
-    --serif: 'IBM Plex Serif', Georgia, serif;
+    --bg:#F6F4F0;
+    --bg-panel:#FFFFFF;
+    --bg-panel-alt:#F8F6F1;
+    --bg-inset:#EFECE4;
+    --border:#DCD6C8;
+    --border-bright:#B9B19C;
+    --text-primary:#241F16;
+    --text-dim:#453F30;
+    --text-faint:#6B644F;
+    --teal:#189B7F;
+    --amber:#DE8B2C;
+    --rust:#E0503E;
+    --blue:#3A79D6;
+    --teal-soft:#DCF3EC;
+    --amber-soft:#FBEBD6;
+    --rust-soft:#FBE2DE;
+    --blue-soft:#E9F0FB;
+    --mono: 'Quicksand', sans-serif;
+    --serif: 'Quicksand', sans-serif;
+    --display: 'Righteous', cursive;
+    --radius: 12px;
+    --radius-sm: 8px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -52,8 +59,9 @@
     gap:14px;
   }
   .wordmark{
+    font-family:var(--display);
     font-size:30px;
-    font-weight:700;
+    font-weight:400;
     letter-spacing:0.5px;
     color:var(--text-primary);
     display:flex;
@@ -62,11 +70,13 @@
   }
   .wordmark .dot{color:var(--teal);}
   .tagline{
-    font-size:11px;
+    font-size:10.5px;
     color:var(--text-faint);
-    letter-spacing:1.5px;
-    text-transform:uppercase;
+    letter-spacing:0.3px;
+    text-transform:none;
     margin-top:4px;
+    max-width:360px;
+    line-height:1.4;
   }
   .scan-status{
     text-align:right;
@@ -124,16 +134,21 @@
   .card{
     background:var(--bg-panel);
     border:2px solid var(--border-bright);
+    border-radius:var(--radius);
+    overflow:hidden;
   }
+  .card.card-low{border-left:5px solid var(--teal);}
+  .card.card-mid{border-left:5px solid var(--amber);}
   .card-head{
     padding:9px 12px 8px;
     border-bottom:1px solid var(--border);
     display:flex;
     justify-content:space-between;
-    align-items:flex-start;
-    gap:16px;
+    align-items:stretch;
+    gap:12px;
     flex-wrap:wrap;
   }
+  .company-block{flex:1 1 140px;min-width:0;align-self:center;}
   .company-block .company{
     font-size:15px;
     font-weight:600;
@@ -151,53 +166,103 @@
     text-transform:uppercase;
     padding:2px 6px;
     border:1px solid var(--border-bright);
+    border-radius:var(--radius-sm);
     color:var(--text-dim);
   }
-  .tag.risk-low{color:var(--teal);border-color:var(--teal);}
-  .tag.risk-mid{color:var(--amber);border-color:var(--amber);}
+  .tag.risk-low{color:var(--teal);border-color:var(--teal);background:var(--teal-soft);}
+  .tag.risk-mid{color:var(--amber);border-color:var(--amber);background:var(--amber-soft);}
 
-  .price-block{text-align:right;}
-  .price-delta{font-size:22px;font-weight:700;line-height:1.1;}
-  .price-delta.up{color:var(--text-primary);}
-  .price-now{font-size:12px;color:var(--text-dim);font-weight:500;margin-top:2px;}
-  .price-baseline{font-size:10px;color:var(--text-faint);margin-top:1px;}
-  .price-est{font-size:10.5px;color:var(--text-dim);margin-top:4px;padding-top:4px;border-top:1px solid var(--border);}
-  .price-est b{color:var(--text-primary);}
-  .price-pending{font-size:11px;color:var(--text-faint);line-height:1.4;font-style:italic;}
-  .price-baselines{font-size:10px;color:var(--text-faint);margin-top:2px;line-height:1.5;}
-  .price-baselines b{color:var(--text-dim);}
-
-  .trend-section{margin-bottom:9px;}
-  .trend-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    font-size:10px;
-    letter-spacing:0.6px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    margin-bottom:4px;
+  .head-vol{
+    flex:0 0 auto;
+    align-self:center;
+    text-align:right;
+    line-height:1.3;
   }
-  .trend-chart{
+  .head-vol-label{
+    font-size:8.5px;
+    letter-spacing:0.6px;
+    color:var(--text-faint);
+  }
+  .head-vol-value{
+    font-size:13px;
+    font-weight:700;
+    color:var(--text-dim);
+  }
+
+  .head-trend{
+    flex:0 0 225px;
+    align-self:stretch;
+    min-height:44px;
+  }
+  .trend-chart-mini{
     width:100%;
+    height:100%;
     display:block;
     background:var(--bg-inset);
     border:1px solid var(--border);
+    border-radius:var(--radius-sm);
   }
-  .trend-unavailable{
-    font-size:10.5px;
+
+  .price-block{text-align:right;flex:0 0 auto;align-self:center;}
+  .price-delta{font-size:13.5px;font-weight:700;line-height:1.35;white-space:nowrap;}
+  .price-dollar{font-weight:400;color:var(--text-dim);font-size:12px;}
+  .price-delta.up{color:var(--text-primary);}
+  .price-baseline{font-size:10px;color:var(--text-faint);margin-top:1px;}
+  .price-pending{font-size:11px;color:var(--text-faint);line-height:1.4;font-style:italic;max-width:150px;}
+  .price-baselines{
+    display:grid;
+    grid-template-columns:auto auto;
+    justify-content:end;
+    column-gap:10px;
+    row-gap:2px;
+    font-size:10px;
     color:var(--text-faint);
-    font-style:italic;
-    padding:8px 0;
+    margin-top:3px;
+    line-height:1.5;
   }
+  .price-baselines b{color:var(--text-dim);}
+  .pb-cell{white-space:nowrap;text-align:left;}
 
   .empty-state{
     border:1px dashed var(--border-bright);
+    border-radius:var(--radius);
     padding:24px 18px;
     text-align:center;
     font-size:12px;
     color:var(--text-faint);
     line-height:1.6;
+  }
+
+  .info-section{margin-top:20px;}
+  .info-list{display:flex;flex-direction:column;gap:6px;}
+  .info-card{
+    background:var(--bg-panel-alt);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:8px 12px;
+  }
+  .info-card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .info-card .company{font-size:12.5px;font-weight:600;}
+  .info-card .tag{font-size:9px;padding:1px 5px;}
+  .info-card .headline-quote{
+    font-size:12px;
+    margin:5px 0 4px;
+    padding-left:8px;
+    border-left:2px solid var(--border);
+  }
+  .info-card .headline-src{font-size:9.5px;}
+  .info-card .info-reason{
+    font-family:var(--serif);
+    font-size:11.5px;
+    color:var(--text-dim);
+    line-height:1.5;
+    margin:0;
   }
 
   .card-body{padding:10px 12px 12px;}
@@ -242,6 +307,7 @@
     width:14px;height:7px;
     background:var(--bg-inset);
     border:1px solid var(--border-bright);
+    border-radius:2px;
   }
   .meter-seg.fill-low{background:var(--teal);border-color:var(--teal);}
   .meter-seg.fill-mid{background:var(--amber);border-color:var(--amber);}
@@ -251,8 +317,9 @@
 
   /* analyst note */
   .analyst-note{
-    background:var(--bg-inset);
+    background:var(--blue-soft);
     border:1px solid var(--border);
+    border-radius:var(--radius-sm);
     padding:8px 10px;
     margin-bottom:9px;
   }
@@ -277,6 +344,7 @@
   .precedent-toggle{
     background:none;
     border:1px solid var(--border-bright);
+    border-radius:var(--radius-sm);
     color:var(--text-dim);
     font-family:var(--mono);
     font-size:10.5px;
@@ -334,6 +402,7 @@
     letter-spacing:0.5px;
     padding:9px 16px;
     border:1px solid var(--blue);
+    border-radius:var(--radius-sm);
     background:transparent;
     color:var(--blue);
     cursor:pointer;
@@ -366,6 +435,7 @@
   .tally-card{
     background:var(--bg-panel);
     border:1px solid var(--border);
+    border-radius:var(--radius-sm);
     padding:10px 12px;
   }
   .tally-title{
@@ -402,6 +472,7 @@
     padding:7px;
     background:var(--bg-inset);
     border:1px solid var(--border-bright);
+    border-radius:var(--radius-sm);
     color:var(--text-primary);
     cursor:pointer;
     text-transform:uppercase;
@@ -415,6 +486,7 @@
     padding:5px;
     background:none;
     border:1px solid var(--border);
+    border-radius:var(--radius-sm);
     color:var(--text-faint);
     cursor:pointer;
   }
@@ -423,6 +495,7 @@
   .log-card{
     background:var(--bg-panel);
     border:1px solid var(--border);
+    border-radius:var(--radius-sm);
     padding:10px 12px;
     font-size:11px;
     color:var(--text-faint);
@@ -444,6 +517,7 @@
 
   .disclaimer-card{
     border:1px dashed var(--border-bright);
+    border-radius:var(--radius-sm);
     padding:10px 12px;
     font-size:10.5px;
     line-height:1.5;
@@ -462,17 +536,17 @@
 </head>
 <body>
 
-<div class="demo-banner">⚡ Live classifications from the daily scan pipeline. Price tracking &amp; historical precedent lookup are not wired up yet — mock buy is disabled until that's built.</div>
+<div class="demo-banner">⚡ Live classifications from the daily scan pipeline. Historical precedent lookup isn't wired up yet.</div>
 
 <header class="masthead">
   <div class="wrap masthead-row">
     <div>
       <div class="wordmark">DOWNERS<span class="dot">_</span></div>
-      <div class="tagline">Confidence shocks · not fundamentals</div>
+      <div class="tagline">Screening headline-driven stock dips likely to recover once the news cycle moves on</div>
     </div>
     <div class="scan-status">
-      <div><span class="live-dot"></span>LAST SCAN <b>09:00 EST</b> · 34 HEADLINES REVIEWED · 3 FLAGGED</div>
-      <div>NEXT SCAN IN <b>14:52:06</b></div>
+      <div><span class="live-dot"></span>LAST SCAN <b id="lastScanTime">—</b> · <b id="headlinesReviewed">—</b> HEADLINES REVIEWED · <b id="flaggedCount">—</b> FLAGGED</div>
+      <div>NEXT SCAN IN <b id="nextScanCountdown">—</b></div>
     </div>
   </div>
 </header>
@@ -481,6 +555,11 @@
   <div class="main-layout">
     <div class="section-label">Today's Flagged Events</div>
     <div class="event-list" id="eventList"></div>
+
+    <div class="info-section" id="infoSection" style="display:none;">
+      <div class="section-label">Worth Knowing — No Direct Investment Angle</div>
+      <div class="info-list" id="infoEventList"></div>
+    </div>
 
     <div class="section-label" style="margin-top:20px;">Mock Portfolio Overview</div>
     <div class="portfolio-row">
@@ -524,6 +603,7 @@
 
 <script>
 let events = [];
+let infoEvents = [];
 const state = {};
 let closedPositions = [];
 let day = 0;
@@ -547,50 +627,128 @@ function humanizeCategory(cat){
 // fundamental-impact risk (score <= 3) — i.e. likely confidence shocks,
 // not real fundamentals problems. Anything the model wasn't sure about,
 // or flagged as not relevant, is left out entirely.
+function formatScanTime(isoString){
+  if(!isoString) return "unknown";
+  const d = new Date(isoString);
+  if(isNaN(d.getTime())) return "unknown";
+  return d.toLocaleString("en-US", {
+    month: "short", day: "numeric",
+    hour: "2-digit", minute: "2-digit",
+    timeZoneName: "short"
+  });
+}
+
+// The daily workflow runs at 13:00 UTC (9am ET). This computes the next
+// occurrence of that time, purely from the current clock — it doesn't
+// depend on events.json, so it stays accurate even between scans.
+function nextScanTime(){
+  const now = new Date();
+  const next = new Date(now);
+  next.setUTCHours(13, 0, 0, 0);
+  if(next <= now) next.setUTCDate(next.getUTCDate() + 1);
+  return next;
+}
+
+function tickCountdown(){
+  const el = document.getElementById("nextScanCountdown");
+  if(!el) return;
+  const diff = nextScanTime() - new Date();
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  el.textContent = `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+setInterval(tickCountdown, 1000);
+tickCountdown();
+
+function updateScanStatus(payload){
+  const lastScanEl = document.getElementById("lastScanTime");
+  const reviewedEl = document.getElementById("headlinesReviewed");
+  const flaggedEl = document.getElementById("flaggedCount");
+  if(!Array.isArray(payload)){
+    if(lastScanEl) lastScanEl.textContent = formatScanTime(payload.generated_at);
+    if(reviewedEl) reviewedEl.textContent = typeof payload.headlines_reviewed === "number" ? payload.headlines_reviewed : "—";
+    if(flaggedEl) flaggedEl.textContent = typeof payload.flagged_count === "number" ? payload.flagged_count : "—";
+  } else {
+    // Old flat-array format has no metadata to show.
+    if(lastScanEl) lastScanEl.textContent = "unknown (older data format)";
+    if(reviewedEl) reviewedEl.textContent = payload.length;
+    if(flaggedEl) flaggedEl.textContent = "—";
+  }
+}
+
 async function loadEvents(){
   const list = document.getElementById("eventList");
+  const infoList = document.getElementById("infoEventList");
   try {
     const res = await fetch("events.json", { cache: "no-store" });
     if(!res.ok) throw new Error("events.json not found (" + res.status + ")");
-    const raw = await res.json();
+    const payload = await res.json();
 
-    events = raw
-      .filter(e => e.confident === true
-        && !e.error
-        && e.category && e.category !== "not_relevant"
-        && typeof e.fundamental_impact_score === "number"
-        && e.fundamental_impact_score <= 3)
-      .map((e, i) => ({
-        id: "ev" + i,
-        company: e.company || e.title,
-        ticker: e.ticker || "",
-        category: humanizeCategory(e.category),
-        score: e.fundamental_impact_score,
-        verdict: e.fundamental_impact_score <= 2 ? "low" : "mid",
-        headline: e.title,
-        source: e.source || "",
-        url: e.url || "",
-        reasoning: e.reasoning || "",
-        basePrice: typeof e.base_price === "number" ? e.base_price : null,
-        basePriceDate: e.base_price_date || null,
-        avgBasePrice3d: typeof e.avg_base_price_3d === "number" ? e.avg_base_price_3d : null,
-        avgBaseDays: e.avg_base_days_used || null,
-        currentPrice: typeof e.current_price === "number" ? e.current_price : null,
-        currentPriceDate: e.current_price_date || null,
-        priceError: e.price_error || null,
-        trend5y: Array.isArray(e.trend_5y) ? e.trend_5y : null,
-        trend5yError: e.trend_5y_error || null,
-        // Historical precedent lookup (Phase 2) isn't built yet.
-        precedents: null
-      }));
+    // Backward-compatible: accept either the old flat-array shape or the
+    // new {generated_at, headlines_reviewed, flagged_count, events} shape.
+    const raw = Array.isArray(payload) ? payload : (payload.events || []);
+    updateScanStatus(payload);
 
-    events.forEach(e => { state[e.id] = { live: e.currentPrice, position: null }; });
+    const qualifying = raw.filter(e => e.confident === true
+      && !e.error
+      && e.category && e.category !== "not_relevant"
+      && typeof e.fundamental_impact_score === "number"
+      && e.fundamental_impact_score <= 3);
 
-    if(events.length === 0){
+    // Dedup by company name (case-insensitive) — keep first occurrence,
+    // since multiple outlets often run the same story same-day.
+    const seen = new Set();
+    const deduped = [];
+    for(const e of qualifying){
+      const key = (e.company || e.title || "").trim().toLowerCase();
+      if(seen.has(key)) continue;
+      seen.add(key);
+      deduped.push(e);
+    }
+
+    const mapped = deduped.map((e, i) => ({
+      id: "ev" + i,
+      company: e.company || e.title,
+      ticker: e.ticker || "",
+      isSubstitute: e.is_substitute === true,
+      substituteCompany: e.substitute_company || null,
+      substituteTicker: e.substitute_ticker || null,
+      substituteReasoning: e.substitute_reasoning || null,
+      noInvestmentAngle: e.no_investment_angle === true,
+      category: humanizeCategory(e.category),
+      score: e.fundamental_impact_score,
+      verdict: e.fundamental_impact_score <= 2 ? "low" : "mid",
+      headline: e.title,
+      source: e.source || "",
+      url: e.url || "",
+      reasoning: e.reasoning || "",
+      basePrice: typeof e.base_price === "number" ? e.base_price : null,
+      basePriceDate: e.base_price_date || null,
+      avgBasePrice15d: typeof e.avg_base_price_15d === "number" ? e.avg_base_price_15d : null,
+      avgBaseDays: e.avg_base_days_used || null,
+      volatilityPct: typeof e.volatility_pct === "number" ? e.volatility_pct : null,
+      currentPrice: typeof e.current_price === "number" ? e.current_price : null,
+      currentPriceDate: e.current_price_date || null,
+      priceError: e.price_error || null,
+      trend5y: Array.isArray(e.trend_5y) ? e.trend_5y : null,
+      trend5yError: e.trend_5y_error || null,
+      precedents: null
+    }));
+
+    // Events with no ticker and no viable substitute go in a separate,
+    // lower-priority "worth knowing" section rather than mixed in above.
+    events = mapped.filter(e => !e.noInvestmentAngle);
+    infoEvents = mapped.filter(e => e.noInvestmentAngle);
+
+    mapped.forEach(e => { state[e.id] = { live: e.currentPrice, position: null }; });
+
+    if(events.length === 0 && infoEvents.length === 0){
       list.innerHTML = `<div class="empty-state">No confidence-shock events flagged in the latest scan. Check back after the next run.</div>`;
     } else {
       renderEvents();
     }
+    renderInfoEvents();
     renderTally();
   } catch (err) {
     list.innerHTML = `<div class="empty-state">Couldn't load events.json (${err.message}). This page needs to be served alongside events.json — e.g. via GitHub Pages — rather than opened as a local file.</div>`;
@@ -645,15 +803,24 @@ function renderEvents(){
     const tagCls = e.verdict === "low" ? "risk-low" : "risk-mid";
 
     let priceBlockHtml;
+    let investFor100Text = "—";
     if(hasPriceData){
       const upside = ((e.basePrice - s.live) / s.live * 100);
+      const dollarGain = (e.basePrice - s.live);
+      const gainLabel = upside >= 0
+        ? `${upside.toFixed(1)}% gain from recovery`
+        : `${Math.abs(upside).toFixed(1)}% above baseline already`;
+      const avgText = e.avgBasePrice15d !== null ? fmtMoney(e.avgBasePrice15d) : "n/a";
+      if(upside > 0){
+        investFor100Text = fmtMoney(100 / (upside / 100));
+      }
       priceBlockHtml = `
-        <div class="price-delta up">+${upside.toFixed(1)}%</div>
-        <div class="price-now">if recovers to single-day baseline</div>
+        <div class="price-delta up">${gainLabel} <span class="price-dollar">(${fmtMoney(Math.abs(dollarGain))})</span></div>
         <div class="price-baselines">
-          <b>single-day:</b> ${fmtMoney(e.basePrice)} (${e.basePriceDate || "n/a"})<br>
-          <b>3-day avg:</b> ${e.avgBasePrice3d !== null ? fmtMoney(e.avgBasePrice3d) : "n/a"}<br>
-          <b>now:</b> ${fmtMoney(s.live)} (${e.currentPriceDate || "n/a"})
+          <div class="pb-cell"><b>pre-event:</b> ${fmtMoney(e.basePrice)}</div>
+          <div class="pb-cell"><b>now:</b> ${fmtMoney(s.live)}</div>
+          <div class="pb-cell"><b>15-day avg:</b> ${avgText}</div>
+          <div class="pb-cell"><b>invest for $100:</b> ${investFor100Text}</div>
         </div>
       `;
     } else {
@@ -661,25 +828,32 @@ function renderEvents(){
       priceBlockHtml = `<div class="price-pending">${reason}</div>`;
     }
 
-    let trendSectionHtml = "";
+    let inlineTrendHtml = "";
     if(Array.isArray(e.trend5y) && e.trend5y.length >= 2){
-      const built = buildTrendPath(e.trend5y, 280, 46, 4);
-      trendSectionHtml = `
-        <div class="trend-section">
-          <div class="trend-head">
-            <span>5-Year Trend</span>
-            <span>${fmtMoney(built.min)} – ${fmtMoney(built.max)}</span>
-          </div>
-          <svg class="trend-chart" viewBox="0 0 280 46" preserveAspectRatio="none">
-            <path d="${built.d}" fill="none" stroke="var(--blue)" stroke-width="1.5"/>
-          </svg>
+      const built = buildTrendPath(e.trend5y, 225, 32, 3);
+      inlineTrendHtml = `
+        <svg class="trend-chart-mini" viewBox="0 0 225 32" preserveAspectRatio="none">
+          <path d="${built.d}" fill="none" stroke="var(--blue)" stroke-width="1.4"/>
+        </svg>
+      `;
+    }
+
+    let volBlockHtml = "";
+    if(e.volatilityPct !== null){
+      volBlockHtml = `
+        <div class="head-vol">
+          <div class="head-vol-label">1Y VOL</div>
+          <div class="head-vol-value">${e.volatilityPct.toFixed(1)}%</div>
         </div>
       `;
-    } else if(e.trend5yError) {
-      trendSectionHtml = `
-        <div class="trend-section">
-          <div class="trend-head"><span>5-Year Trend</span></div>
-          <div class="trend-unavailable">${e.trend5yError}</div>
+    }
+
+    let substituteNoteHtml = "";
+    if(e.isSubstitute){
+      substituteNoteHtml = `
+        <div class="analyst-note">
+          <div class="note-head"><span>NO DIRECT TICKER — CLOSEST PUBLIC PROXY</span><span>${e.substituteTicker}</span></div>
+          <p><b>${e.substituteCompany}</b> — ${e.substituteReasoning || ""}</p>
         </div>
       `;
     }
@@ -738,15 +912,17 @@ function renderEvents(){
       : e.headline;
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card card-" + e.verdict;
     card.innerHTML = `
       <div class="card-head">
         <div class="company-block">
-          <span class="company">${e.company}</span>${e.ticker ? `<span class="ticker">${e.ticker}</span>` : ""}
+          <span class="company">${e.company}</span>${e.ticker ? `<span class="ticker">${e.ticker}</span>` : (e.isSubstitute ? `<span class="ticker">via ${e.substituteTicker}</span>` : "")}
           <div class="tag-row">
             <span class="tag ${tagCls}">${e.category}</span>
           </div>
         </div>
+        ${volBlockHtml}
+        <div class="head-trend">${inlineTrendHtml}</div>
         <div class="price-block">
           ${priceBlockHtml}
         </div>
@@ -765,7 +941,7 @@ function renderEvents(){
           <p>${e.reasoning}</p>
         </div>
 
-        ${trendSectionHtml}
+        ${substituteNoteHtml}
 
         ${precedentSectionHtml}
 
@@ -773,6 +949,33 @@ function renderEvents(){
           ${buyRowHtml}
         </div>
       </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function renderInfoEvents(){
+  const section = document.getElementById("infoSection");
+  const list = document.getElementById("infoEventList");
+  if(infoEvents.length === 0){
+    section.style.display = "none";
+    return;
+  }
+  section.style.display = "block";
+  list.innerHTML = "";
+  infoEvents.forEach(e => {
+    const headlineLink = e.url
+      ? `<a href="${e.url}" target="_blank" rel="noopener">${e.headline}</a>`
+      : e.headline;
+    const card = document.createElement("div");
+    card.className = "info-card";
+    card.innerHTML = `
+      <div class="info-card-head">
+        <span class="company">${e.company}</span>
+        <span class="tag">${e.category}</span>
+      </div>
+      <p class="headline-quote">${headlineLink}<span class="headline-src">${e.source}</span></p>
+      <p class="info-reason">No publicly traded ticker or reasonable proxy identified for this story — included for awareness only.</p>
     `;
     list.appendChild(card);
   });

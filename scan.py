@@ -80,6 +80,51 @@ def classify_headline(headline, max_retries=3):
         except Exception as e:
             return {"error": f"Unexpected error: {str(e)}"}
 
+SUBSTITUTE_PROMPT = """The following news story involves a company that either isn't publicly traded, or whose stock ticker couldn't be identified.
+
+Story: {title}
+Description: {description}
+Company involved: {company}
+
+Is there a publicly traded company — a parent company, franchisor, major competitor, or key supplier/customer — that would plausibly see a similar short-term stock dip from this same news, due to shared brand exposure or investor confusion? This needs to be a genuine, defensible connection, not a stretch. If nothing reasonable comes to mind, say so.
+
+Respond with ONLY a JSON object (no markdown, no extra text):
+- "has_substitute": true or false
+- "substitute_company": name of the substitute company, or null
+- "substitute_ticker": its stock ticker, or null
+- "substitute_reasoning": 1-2 sentences explaining the connection, or null if has_substitute is false
+"""
+
+def find_substitute_ticker(headline, company_name, max_retries=2):
+    prompt = SUBSTITUTE_PROMPT.format(
+        title=headline["title"],
+        description=headline["description"] or "(no description)",
+        company=company_name or "unknown"
+    )
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.5-flash-lite",
+                contents=prompt
+            )
+            text = response.text.strip()
+            if text.startswith("```"):
+                text = text.split("```")[1]
+                if text.startswith("json"):
+                    text = text[4:]
+            try:
+                return json.loads(text)
+            except json.JSONDecodeError:
+                return {"has_substitute": False}
+        except errors.APIError:
+            if attempt < max_retries - 1:
+                time.sleep(30)
+            else:
+                return {"has_substitute": False}
+        except Exception:
+            return {"has_substitute": False}
+    return {"has_substitute": False}
+
 def parse_pub_date(pub_date_str):
     try:
         return datetime.strptime(pub_date_str, "%Y-%m-%d %H:%M:%S")
@@ -87,15 +132,7 @@ def parse_pub_date(pub_date_str):
         return datetime.utcnow()
 
 def get_price_data(ticker, pub_date_str):
-    """
-    Returns two baselines:
-      - base_price: the single last close strictly before the event date
-      - avg_base_price_3d: the average close over the 3 trading days
-        before the event (smooths single-day noise)
-    Plus the current price for comparison.
-    """
     event_date = parse_pub_date(pub_date_str)
-
     try:
         stock = yf.Ticker(ticker)
         start = event_date - timedelta(days=15)
@@ -137,10 +174,6 @@ def get_price_data(ticker, pub_date_str):
                 "price_error": f"Price lookup failed: {str(e)}"}
 
 def get_five_year_trend(ticker):
-    """
-    Monthly closing prices over the last 5 years, for a lightweight
-    trendline. Downsampled to ~60 points instead of ~1,250 daily points.
-    """
     try:
         stock = yf.Ticker(ticker)
         hist = stock.history(period="5y", interval="1mo")
@@ -167,13 +200,29 @@ def main():
             and merged.get("category") not in (None, "not_relevant")
             and isinstance(merged.get("fundamental_impact_score"), int)
             and merged["fundamental_impact_score"] <= 3
-            and merged.get("ticker")
         )
+
         if is_flagged:
-            price_data = get_price_data(merged["ticker"], h["pubDate"])
-            merged.update(price_data)
-            trend_data = get_five_year_trend(merged["ticker"])
-            merged.update(trend_data)
+            lookup_ticker = merged.get("ticker")
+
+            if not lookup_ticker:
+                # No direct ticker — see if a publicly traded proxy makes sense.
+                time.sleep(SECONDS_BETWEEN_CALLS)
+                sub = find_substitute_ticker(h, merged.get("company"))
+                if sub.get("has_substitute") and sub.get("substitute_ticker"):
+                    merged["is_substitute"] = True
+                    merged["substitute_company"] = sub.get("substitute_company")
+                    merged["substitute_ticker"] = sub.get("substitute_ticker")
+                    merged["substitute_reasoning"] = sub.get("substitute_reasoning")
+                    lookup_ticker = sub["substitute_ticker"]
+                else:
+                    merged["no_investment_angle"] = True
+
+            if lookup_ticker:
+                price_data = get_price_data(lookup_ticker, h["pubDate"])
+                merged.update(price_data)
+                trend_data = get_five_year_trend(lookup_ticker)
+                merged.update(trend_data)
 
         results.append(merged)
         if i < len(headlines) - 1:

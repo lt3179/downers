@@ -164,6 +164,32 @@
   .price-est{font-size:10.5px;color:var(--text-dim);margin-top:4px;padding-top:4px;border-top:1px solid var(--border);}
   .price-est b{color:var(--text-primary);}
   .price-pending{font-size:11px;color:var(--text-faint);line-height:1.4;font-style:italic;}
+  .price-baselines{font-size:10px;color:var(--text-faint);margin-top:2px;line-height:1.5;}
+  .price-baselines b{color:var(--text-dim);}
+
+  .trend-section{margin-bottom:9px;}
+  .trend-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:10px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:4px;
+  }
+  .trend-chart{
+    width:100%;
+    display:block;
+    background:var(--bg-inset);
+    border:1px solid var(--border);
+  }
+  .trend-unavailable{
+    font-size:10.5px;
+    color:var(--text-faint);
+    font-style:italic;
+    padding:8px 0;
+  }
 
   .empty-state{
     border:1px dashed var(--border-bright);
@@ -545,13 +571,20 @@ async function loadEvents(){
         source: e.source || "",
         url: e.url || "",
         reasoning: e.reasoning || "",
-        // Not yet wired up — price history and historical precedent
-        // lookup is a later phase of the pipeline.
-        basePrice: null,
+        basePrice: typeof e.base_price === "number" ? e.base_price : null,
+        basePriceDate: e.base_price_date || null,
+        avgBasePrice3d: typeof e.avg_base_price_3d === "number" ? e.avg_base_price_3d : null,
+        avgBaseDays: e.avg_base_days_used || null,
+        currentPrice: typeof e.current_price === "number" ? e.current_price : null,
+        currentPriceDate: e.current_price_date || null,
+        priceError: e.price_error || null,
+        trend5y: Array.isArray(e.trend_5y) ? e.trend_5y : null,
+        trend5yError: e.trend_5y_error || null,
+        // Historical precedent lookup (Phase 2) isn't built yet.
         precedents: null
       }));
 
-    events.forEach(e => { state[e.id] = { live: null, position: null }; });
+    events.forEach(e => { state[e.id] = { live: e.currentPrice, position: null }; });
 
     if(events.length === 0){
       list.innerHTML = `<div class="empty-state">No confidence-shock events flagged in the latest scan. Check back after the next run.</div>`;
@@ -573,6 +606,23 @@ function fmtPct(n){
   return sign + n.toFixed(1) + "%";
 }
 
+function buildTrendPath(points, width, height, padding){
+  if(!points || points.length < 2) return null;
+  const closes = points.map(p => p.close);
+  const min = Math.min(...closes);
+  const max = Math.max(...closes);
+  const range = (max - min) || 1;
+  const usableW = width - padding * 2;
+  const usableH = height - padding * 2;
+  const coords = points.map((p, i) => {
+    const x = padding + (i / (points.length - 1)) * usableW;
+    const y = padding + usableH - ((p.close - min) / range) * usableH;
+    return [x, y];
+  });
+  const d = coords.map((c, i) => (i === 0 ? "M" : "L") + c[0].toFixed(1) + "," + c[1].toFixed(1)).join(" ");
+  return { d, min, max };
+}
+
 function meterHtml(score, verdict){
   let segs = "";
   for(let i=1;i<=5;i++){
@@ -588,7 +638,7 @@ function renderEvents(){
   list.innerHTML = "";
   events.forEach(e => {
     const s = state[e.id];
-    const hasPriceData = e.basePrice !== null && e.basePrice !== undefined;
+    const hasPriceData = e.basePrice !== null && e.currentPrice !== null;
     const hasPrecedents = Array.isArray(e.precedents) && e.precedents.length > 0;
     const verdictLabel = e.verdict === "low" ? "LOW RISK — LIKELY CONFIDENCE SHOCK" : "MEDIUM RISK — MONITOR";
     const verdictCls = e.verdict === "low" ? "low" : "mid";
@@ -599,12 +649,39 @@ function renderEvents(){
       const upside = ((e.basePrice - s.live) / s.live * 100);
       priceBlockHtml = `
         <div class="price-delta up">+${upside.toFixed(1)}%</div>
-        <div class="price-now">if recovers to pre-event</div>
-        <div class="price-baseline">now ${fmtMoney(s.live)} → pre-event ${fmtMoney(e.basePrice)}</div>
-        <div class="price-est">est. recovery: <b>${e.estRecovery}</b></div>
+        <div class="price-now">if recovers to single-day baseline</div>
+        <div class="price-baselines">
+          <b>single-day:</b> ${fmtMoney(e.basePrice)} (${e.basePriceDate || "n/a"})<br>
+          <b>3-day avg:</b> ${e.avgBasePrice3d !== null ? fmtMoney(e.avgBasePrice3d) : "n/a"}<br>
+          <b>now:</b> ${fmtMoney(s.live)} (${e.currentPriceDate || "n/a"})
+        </div>
       `;
     } else {
-      priceBlockHtml = `<div class="price-pending">Price tracking<br>not yet connected</div>`;
+      const reason = e.priceError ? e.priceError : (e.ticker ? "Price lookup pending" : "No ticker identified for this event");
+      priceBlockHtml = `<div class="price-pending">${reason}</div>`;
+    }
+
+    let trendSectionHtml = "";
+    if(Array.isArray(e.trend5y) && e.trend5y.length >= 2){
+      const built = buildTrendPath(e.trend5y, 280, 46, 4);
+      trendSectionHtml = `
+        <div class="trend-section">
+          <div class="trend-head">
+            <span>5-Year Trend</span>
+            <span>${fmtMoney(built.min)} – ${fmtMoney(built.max)}</span>
+          </div>
+          <svg class="trend-chart" viewBox="0 0 280 46" preserveAspectRatio="none">
+            <path d="${built.d}" fill="none" stroke="var(--blue)" stroke-width="1.5"/>
+          </svg>
+        </div>
+      `;
+    } else if(e.trend5yError) {
+      trendSectionHtml = `
+        <div class="trend-section">
+          <div class="trend-head"><span>5-Year Trend</span></div>
+          <div class="trend-unavailable">${e.trend5yError}</div>
+        </div>
+      `;
     }
 
     let buyRowHtml;
@@ -688,6 +765,8 @@ function renderEvents(){
           <p>${e.reasoning}</p>
         </div>
 
+        ${trendSectionHtml}
+
         ${precedentSectionHtml}
 
         <div class="buy-row">
@@ -714,7 +793,7 @@ function mockBuy(id){
 
 function advanceDay(){
   day++;
-  events.filter(e => e.basePrice !== null && e.basePrice !== undefined).forEach(e => {
+  events.filter(e => e.basePrice !== null && e.currentPrice !== null).forEach(e => {
     const s = state[e.id];
     // drift live price toward baseline with some noise
     const gap = e.basePrice - s.live;
@@ -771,8 +850,8 @@ function renderTally(){
 document.getElementById("ffBtn").addEventListener("click", advanceDay);
 document.getElementById("resetBtn").addEventListener("click", () => {
   events.forEach(e => {
-    if(e.basePrice !== null && e.basePrice !== undefined){
-      state[e.id] = { live: e.dropPrice, position: null };
+    if(e.basePrice !== null && e.currentPrice !== null){
+      state[e.id] = { live: e.currentPrice, position: null };
     }
   });
   closedPositions = [];

@@ -16,25 +16,39 @@ SECONDS_BETWEEN_CALLS = 5
 
 def fetch_headlines():
     url = "https://newsdata.io/api/1/news"
-    params = {
+    base_params = {
         "apikey": NEWSDATA_API_KEY,
         "category": "business",
         "language": "en",
         "country": "us",
         "q": "scandal OR backlash OR lawsuit OR recall OR controversy OR breach"
     }
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    data = response.json()
     headlines = []
-    for article in data.get("results", []):
-        headlines.append({
-            "title": article.get("title", ""),
-            "description": article.get("description", ""),
-            "url": article.get("link", ""),
-            "source": article.get("source_id", ""),
-            "pubDate": article.get("pubDate", "")
-        })
+    next_page = None
+    max_pages = 10
+
+    for page_num in range(max_pages):
+        params = dict(base_params)
+        if next_page:
+            params["page"] = next_page
+
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        for article in data.get("results", []):
+            headlines.append({
+                "title": article.get("title", ""),
+                "description": article.get("description", ""),
+                "url": article.get("link", ""),
+                "source": article.get("source_id", ""),
+                "pubDate": article.get("pubDate", "")
+            })
+
+        next_page = data.get("nextPage")
+        if not next_page:
+            break  # no more results available
+
     return headlines
 
 CLASSIFICATION_PROMPT = """You are screening business headlines for a project called Downers, which looks for stocks that drop due to short-term reputational or confidence shocks (scandals, PR gaffes, executive controversies) rather than real fundamental business problems (earnings misses, guidance cuts, structural competitive damage).

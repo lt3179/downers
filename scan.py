@@ -135,9 +135,6 @@ def get_price_data(ticker, pub_date_str):
     """
     base_price: closing price on the previous trading day before the event
     avg_base_price_15d: average close over the 15 trading days before the event
-    volatility_pct: coefficient of variation over that same 15-day window —
-      a rough measure of how steady vs. choppy the stock has been recently
-      (lower = steadier, higher = more erratic)
     """
     event_date = parse_pub_date(pub_date_str)
     try:
@@ -254,6 +251,8 @@ def main():
                 merged.update(price_data)
                 trend_data = get_five_year_trend(lookup_ticker)
                 merged.update(trend_data)
+                vol_data = get_year_volatility(lookup_ticker)
+                merged.update(vol_data)
 
         results.append(merged)
         if i < len(headlines) - 1:

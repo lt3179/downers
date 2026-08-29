@@ -2,7 +2,10 @@ import os
 import json
 import time
 from datetime import datetime, timedelta
+from datetime import datetime as dt
+from urllib.parse import quote
 import requests
+import feedparser
 import yfinance as yf
 from google import genai
 from google.genai import errors
@@ -15,27 +18,21 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 SECONDS_BETWEEN_CALLS = 5
 
 def fetch_headlines():
-    url = "https://newsdata.io/api/1/news"
-    base_params = {
-        "apikey": NEWSDATA_API_KEY,
-        "category": "business",
-        "language": "en",
-        "country": "us",
-        "q": "scandal OR backlash OR lawsuit OR recall OR controversy OR breach"
-    }
     headlines = []
-    next_page = None
-    max_pages = 10
 
-    for page_num in range(max_pages):
-        params = dict(base_params)
-        if next_page:
-            params["page"] = next_page
-
+    # Source 1: NewsData.io (fewer articles, but real descriptions)
+    try:
+        url = "https://newsdata.io/api/1/latest"
+        params = {
+            "apikey": NEWSDATA_API_KEY,
+            "category": "business",
+            "language": "en",
+            "country": "us",
+            "q": "scandal OR backlash OR lawsuit OR recall OR controversy OR breach"
+        }
         response = requests.get(url, params=params)
         response.raise_for_status()
         data = response.json()
-
         for article in data.get("results", []):
             headlines.append({
                 "title": article.get("title", ""),
@@ -44,10 +41,35 @@ def fetch_headlines():
                 "source": article.get("source_id", ""),
                 "pubDate": article.get("pubDate", "")
             })
+        print(f"NewsData.io: {len(data.get('results', []))} articles")
+    except Exception as e:
+        print(f"NewsData.io fetch failed: {e}")
 
-        next_page = data.get("nextPage")
-        if not next_page:
-            break  # no more results available
+    # Source 2: Google News RSS (many more articles, title-only context)
+    try:
+        query = "(scandal OR backlash OR lawsuit OR recall OR controversy OR breach) when:2d"
+        encoded_query = quote(query)
+        rss_url = f"https://news.google.com/rss/search?q={encoded_query}&hl=en-US&gl=US&ceid=US:en"
+        feed = feedparser.parse(rss_url)
+
+        for entry in feed.entries:
+            pub_date = ""
+            if hasattr(entry, "published_parsed") and entry.published_parsed:
+                pub_date = dt(*entry.published_parsed[:6]).strftime("%Y-%m-%d %H:%M:%S")
+            source_name = ""
+            if hasattr(entry, "source") and hasattr(entry.source, "title"):
+                source_name = entry.source.title
+
+            headlines.append({
+                "title": entry.get("title", ""),
+                "description": "",  # Google's RSS doesn't provide real snippets
+                "url": entry.get("link", ""),
+                "source": source_name,
+                "pubDate": pub_date
+            })
+        print(f"Google News RSS: {len(feed.entries)} articles")
+    except Exception as e:
+        print(f"Google News RSS fetch failed: {e}")
 
     return headlines
 

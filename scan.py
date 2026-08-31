@@ -161,44 +161,54 @@ def find_substitute_ticker(headline, company_name, max_retries=2):
             return {"has_substitute": False}
     return {"has_substitute": False}
 
-def parse_pub_date(pub_date_str):
-    try:
-        return datetime.strptime(pub_date_str, "%Y-%m-%d %H:%M:%S")
-    except (ValueError, TypeError):
-        return datetime.utcnow()
-
-def get_price_data(ticker, pub_date_str):
+def get_price_data(ticker):
     """
-    base_price: closing price on the previous trading day before the event
-    avg_base_price_15d: average close over the 15 trading days before the event
+    Detects the pre-dip baseline directly from price action instead of
+    trusting the article's publish date (which is sometimes missing or
+    imprecise, especially from RSS sources). Finds the single largest
+    day-over-day decline in the recent trading window and uses the close
+    right before that drop as the baseline.
     """
-    event_date = parse_pub_date(pub_date_str)
     try:
         stock = yf.Ticker(ticker)
-        start = event_date - timedelta(days=30)
         end = datetime.utcnow() + timedelta(days=1)
+        start = end - timedelta(days=45)
         hist = stock.history(start=start, end=end)
 
-        if hist.empty:
+        if hist.empty or len(hist) < 3:
             return {"base_price": None, "current_price": None,
-                    "price_error": "No price history returned for this ticker"}
+                    "price_error": "Not enough price history for this ticker"}
 
         hist.index = hist.index.tz_localize(None) if hist.index.tz is not None else hist.index
-        event_date_only = event_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        closes = hist["Close"]
 
-        before_event = hist[hist.index < event_date_only]
-        if before_event.empty:
+        recent = closes.tail(16)
+        daily_changes = recent.pct_change().dropna()
+
+        if daily_changes.empty:
             return {"base_price": None, "current_price": None,
-                    "price_error": "No trading data before the event date"}
+                    "price_error": "Not enough recent trading days to detect a dip"}
 
-        base_price = round(float(before_event["Close"].iloc[-1]), 2)
-        base_price_date = before_event.index[-1].strftime("%Y-%m-%d")
+        worst_day = daily_changes.idxmin()
+        worst_change = daily_changes.loc[worst_day]
 
-        window = before_event["Close"].tail(15)
+        if worst_change > -0.015:
+            return {"base_price": None, "current_price": None,
+                    "price_error": "No clear single-day price drop detected in the recent window"}
+
+        worst_day_pos = recent.index.get_loc(worst_day)
+        if worst_day_pos == 0:
+            return {"base_price": None, "current_price": None,
+                    "price_error": "Drop day is at the edge of the lookback window"}
+
+        base_price = round(float(recent.iloc[worst_day_pos - 1]), 2)
+        base_price_date = recent.index[worst_day_pos - 1].strftime("%Y-%m-%d")
+
+        window = closes[closes.index <= recent.index[worst_day_pos - 1]].tail(15)
         avg_base_price_15d = round(float(window.mean()), 2)
         avg_base_days_used = int(len(window))
 
-        current_price = round(float(hist["Close"].iloc[-1]), 2)
+        current_price = round(float(closes.iloc[-1]), 2)
         current_price_date = hist.index[-1].strftime("%Y-%m-%d")
 
         return {
@@ -207,7 +217,9 @@ def get_price_data(ticker, pub_date_str):
             "avg_base_price_15d": avg_base_price_15d,
             "avg_base_days_used": avg_base_days_used,
             "current_price": current_price,
-            "current_price_date": current_price_date
+            "current_price_date": current_price_date,
+            "detected_drop_date": worst_day.strftime("%Y-%m-%d"),
+            "detected_drop_pct": round(worst_change * 100, 1)
         }
     except Exception as e:
         return {"base_price": None, "current_price": None,
@@ -283,7 +295,7 @@ def main():
                     merged["no_investment_angle"] = True
 
             if lookup_ticker:
-                price_data = get_price_data(lookup_ticker, h["pubDate"])
+                price_data = get_price_data(lookup_ticker)
                 merged.update(price_data)
                 trend_data = get_five_year_trend(lookup_ticker)
                 merged.update(trend_data)

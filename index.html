@@ -638,13 +638,16 @@ function formatScanTime(isoString){
   });
 }
 
-// The daily workflow runs at 13:00 UTC (9am ET). This computes the next
-// occurrence of that time, purely from the current clock — it doesn't
-// depend on events.json, so it stays accurate even between scans.
+// The daily workflow runs at 01:00 UTC (9pm ET during EDT). This computes
+// the next occurrence of that time, purely from the current clock — it
+// doesn't depend on events.json, so it stays accurate even between scans.
+// Note: this needs manual adjustment to 02:00 UTC when EST (Standard Time)
+// begins in November, and back to 01:00 UTC in March — cron/UTC don't
+// auto-track Daylight Saving.
 function nextScanTime(){
   const now = new Date();
   const next = new Date(now);
-  next.setUTCHours(13, 0, 0, 0);
+  next.setUTCHours(1, 0, 0, 0);
   if(next <= now) next.setUTCDate(next.getUTCDate() + 1);
   return next;
 }

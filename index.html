@@ -422,16 +422,7 @@
   }
   .btn.open-pos:hover{background:var(--amber);color:#FBFAF6;}
 
-  /* ---------- PORTFOLIO ROW (bottom) ---------- */
-  .portfolio-row{
-    display:grid;
-    grid-template-columns:1.3fr 1fr 1fr;
-    gap:8px;
-    align-items:start;
-  }
-  @media (max-width:820px){
-    .portfolio-row{grid-template-columns:1fr;}
-  }
+  /* ---------- PORTFOLIO / TRADE TRACKING ---------- */
   .tally-card{
     background:var(--bg-panel);
     border:1px solid var(--border);
@@ -447,9 +438,12 @@
   }
   .tally-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px 8px;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px 12px;
     margin-bottom:8px;
+  }
+  @media (max-width:560px){
+    .tally-grid{grid-template-columns:1fr 1fr;}
   }
   .tally-stat .num{
     font-size:16px;
@@ -491,6 +485,48 @@
     cursor:pointer;
   }
   .reset-btn:hover{color:var(--text-dim);border-color:var(--border-bright);}
+
+  .user-banner{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px 18px;
+  }
+  .user-banner-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .user-banner-row input{
+    flex:1 1 260px;
+    font-family:var(--mono);
+    font-size:13px;
+    padding:10px 12px;
+    border:1px solid var(--border-bright);
+    border-radius:var(--radius-sm);
+    background:var(--bg-inset);
+    color:var(--text-primary);
+  }
+  .user-banner-row input:focus{
+    outline:none;
+    border-color:var(--blue);
+  }
+  .user-summary-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  .user-summary-head b{color:var(--text-primary);}
+  .user-summary .reset-btn{width:auto;padding:6px 12px;}
+  .user-summary #tradesList{
+    max-height:220px;
+    overflow-y:auto;
+  }
+  .loading-note{font-size:11.5px;color:var(--text-faint);padding:6px 0;}
+  #tradesList .ticker{color:var(--text-faint);font-size:10.5px;margin-left:4px;}
 
   .log-card{
     background:var(--bg-panel);
@@ -561,40 +597,25 @@
       <div class="info-list" id="infoEventList"></div>
     </div>
 
-    <div class="section-label" style="margin-top:20px;">Mock Portfolio Overview</div>
-    <div class="portfolio-row">
-      <div class="tally-card">
-        <div class="tally-title">Tally</div>
-        <div class="tally-grid">
-          <div class="tally-stat">
-            <div class="num" id="statCapital">$0</div>
-            <div class="lbl">Capital deployed</div>
-          </div>
-          <div class="tally-stat">
-            <div class="num" id="statRealized">$0</div>
-            <div class="lbl">Realized gain</div>
-          </div>
-          <div class="tally-stat">
-            <div class="num" id="statROI">0.0%</div>
-            <div class="lbl">Aggregate ROI</div>
-          </div>
-          <div class="tally-stat">
-            <div class="num" id="statWin">—</div>
-            <div class="lbl">Win rate</div>
-          </div>
+    <div class="section-label" style="margin-top:20px;">Your Mock Portfolio</div>
+    <div class="user-banner">
+      <div class="user-banner-row" id="userEntryRow">
+        <input type="text" id="usernameInput" placeholder="Enter a username to track your mock trades — no password needed">
+        <button class="btn" id="submitUsernameBtn">Go</button>
+      </div>
+      <div class="user-summary" id="userSummary" style="display:none;">
+        <div class="user-summary-head">
+          <span>Tracking as <b id="currentUsernameLabel"></b></span>
+          <button class="reset-btn" id="switchUserBtn">Switch user</button>
         </div>
-        <button class="ff-btn" id="ffBtn">▸ Advance 1 Day (simulate)</button>
-        <button class="reset-btn" id="resetBtn">Reset demo</button>
+        <div class="tally-grid" id="summaryGrid"></div>
+        <div class="tally-title" style="margin-top:14px;">Trades</div>
+        <div id="tradesList"></div>
       </div>
+    </div>
 
-      <div class="log-card">
-        <div class="tally-title">Closed Positions</div>
-        <div id="logList"><div class="log-empty">No positions closed yet.</div></div>
-      </div>
-
-      <div class="disclaimer-card">
-        <b>Not financial advice.</b> Classification is model-generated and imperfect. Historical pattern recovery does not guarantee future recovery. Mock trades are simulated only.
-      </div>
+    <div class="disclaimer-card" style="margin-top:8px;">
+      <b>Not financial advice.</b> Classification is model-generated and imperfect. Historical pattern recovery does not guarantee future recovery. Mock trades are simulated — no real money moves. Trade data is stored under whatever username you enter, with no password protecting it; don't use anything sensitive.
     </div>
   </div>
 </main>
@@ -605,8 +626,7 @@
 let events = [];
 let infoEvents = [];
 const state = {};
-let closedPositions = [];
-let day = 0;
+
 
 const CATEGORY_LABELS = {
   pr_scandal: "PR / Reputational",
@@ -744,7 +764,7 @@ async function loadEvents(){
     events = mapped.filter(e => !e.noInvestmentAngle);
     infoEvents = mapped.filter(e => e.noInvestmentAngle);
 
-    mapped.forEach(e => { state[e.id] = { live: e.currentPrice, position: null }; });
+    mapped.forEach(e => { state[e.id] = { live: e.currentPrice }; });
 
     if(events.length === 0 && infoEvents.length === 0){
       list.innerHTML = `<div class="empty-state">No confidence-shock events flagged in the latest scan. Check back after the next run.</div>`;
@@ -865,24 +885,22 @@ function renderEvents(){
     if(!hasPriceData){
       buyRowHtml = `
         <div class="position-info">Mock buy needs live price data</div>
-        <button class="btn closed" disabled>Coming soon</button>
-      `;
-    } else if(!s.position){
-      buyRowHtml = `
-        <div class="position-info">No position open</div>
-        <button class="btn" onclick="mockBuy('${e.id}')">Mock Buy @ ${fmtMoney(s.live)}</button>
-      `;
-    } else if(s.position.closed){
-      const roiCls = s.position.roi >= 0 ? "roi-pos" : "roi-neg";
-      buyRowHtml = `
-        <div class="position-info">Closed — bought <b>${fmtMoney(s.position.buyPrice)}</b>, sold <b>${fmtMoney(s.position.sellPrice)}</b> · <span class="${roiCls}">${fmtPct(s.position.roi)}</span></div>
-        <button class="btn closed">Position closed</button>
+        <button class="btn closed" disabled>Unavailable</button>
       `;
     } else {
-      buyRowHtml = `
-        <div class="position-info">Open — bought <b>${fmtMoney(s.position.buyPrice)}</b>, now <b>${fmtMoney(s.live)}</b></div>
-        <button class="btn open-pos" disabled>Awaiting recovery…</button>
-      `;
+      const upside = ((e.basePrice - s.live) / s.live * 100);
+      if(upside <= 0){
+        buyRowHtml = `
+          <div class="position-info">Already at or above baseline — no recovery upside to size a trade around</div>
+          <button class="btn closed" disabled>Unavailable</button>
+        `;
+      } else {
+        const investAmt = 100 / (upside / 100);
+        buyRowHtml = `
+          <div class="position-info">Buys ${fmtMoney(investAmt)} worth @ ${fmtMoney(s.live)} — targets $100 profit at recovery</div>
+          <button class="btn" data-buy-id="${e.id}" onclick="mockBuy('${e.id}')">Mock Buy</button>
+        `;
+      }
     }
 
     let precedentSectionHtml = "";
@@ -991,80 +1009,180 @@ function togglePrecedent(id){
   chevron.textContent = panel.classList.contains("open") ? "－" : "＋";
 }
 
-function mockBuy(id){
-  const s = state[id];
-  s.position = { buyPrice: s.live, buyDay: day, closed: false };
-  renderEvents();
-}
+// ============================================================
+// PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE.
+// It will look like:
+// https://script.google.com/macros/s/AKfycb.../exec
+// ============================================================
+const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
-function advanceDay(){
-  day++;
-  events.filter(e => e.basePrice !== null && e.currentPrice !== null).forEach(e => {
-    const s = state[e.id];
-    // drift live price toward baseline with some noise
-    const gap = e.basePrice - s.live;
-    const step = gap * (0.12 + Math.random() * 0.10);
-    s.live = Math.round((s.live + step + (Math.random()-0.5)*0.3) * 100) / 100;
-
-    if(s.position && !s.position.closed && s.live >= e.basePrice){
-      s.position.closed = true;
-      s.position.sellPrice = s.live;
-      s.position.roi = ((s.position.sellPrice - s.position.buyPrice) / s.position.buyPrice) * 100;
-      closedPositions.push({
-        company: e.company, ticker: e.ticker,
-        buyPrice: s.position.buyPrice, sellPrice: s.position.sellPrice,
-        roi: s.position.roi
-      });
+// JSONP request helper — used instead of plain fetch() because Apps
+// Script Web Apps don't reliably send CORS headers, which a browser
+// needs in order to read a cross-origin fetch response. Loading the
+// response via a <script> tag sidesteps CORS entirely.
+function jsonpRequest(params){
+  return new Promise((resolve, reject) => {
+    if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf("PASTE_YOUR") === 0){
+      reject(new Error("APPS_SCRIPT_URL isn't set yet — see the comment above this line in the code."));
+      return;
     }
+    const callbackName = "jsonp_cb_" + Math.random().toString(36).slice(2);
+    const script = document.createElement("script");
+    window[callbackName] = (data) => {
+      resolve(data);
+      delete window[callbackName];
+      script.remove();
+    };
+    const query = new URLSearchParams({ ...params, callback: callbackName }).toString();
+    script.src = APPS_SCRIPT_URL + "?" + query;
+    script.onerror = () => {
+      reject(new Error("Request to the trade tracker failed."));
+      delete window[callbackName];
+      script.remove();
+    };
+    document.body.appendChild(script);
   });
-  renderEvents();
-  renderTally();
 }
 
-function renderTally(){
-  const capital = closedPositions.reduce((sum,p) => sum + p.buyPrice, 0) +
-    events.reduce((sum,e) => sum + (state[e.id].position && !state[e.id].position.closed ? state[e.id].position.buyPrice : 0), 0);
-  const realized = closedPositions.reduce((sum,p) => sum + (p.sellPrice - p.buyPrice), 0);
-  const realizedCapital = closedPositions.reduce((sum,p) => sum + p.buyPrice, 0);
-  const roi = realizedCapital > 0 ? (realized / realizedCapital) * 100 : 0;
-  const wins = closedPositions.filter(p => p.roi >= 0).length;
+function getUsername(){
+  return sessionStorage.getItem("downersUsername");
+}
 
-  document.getElementById("statCapital").textContent = fmtMoney(capital).replace("$-","-$");
-  const realizedEl = document.getElementById("statRealized");
-  realizedEl.textContent = fmtMoney(realized);
-  realizedEl.className = "num " + (realized >= 0 ? "pos" : "neg");
-  const roiEl = document.getElementById("statROI");
-  roiEl.textContent = fmtPct(roi);
-  roiEl.className = "num " + (roi >= 0 ? "pos" : "neg");
-  document.getElementById("statWin").textContent = closedPositions.length > 0
-    ? Math.round((wins/closedPositions.length)*100) + "%"
-    : "—";
+function submitUsername(){
+  const input = document.getElementById("usernameInput");
+  const name = input.value.trim();
+  if(!name) return;
+  sessionStorage.setItem("downersUsername", name);
+  loadUserSummary();
+}
 
-  const logList = document.getElementById("logList");
-  if(closedPositions.length === 0){
-    logList.innerHTML = `<div class="log-empty">No positions closed yet.</div>`;
-  } else {
-    logList.innerHTML = closedPositions.slice().reverse().map(p => `
-      <div class="log-entry">
-        <span>${p.ticker}</span>
-        <span class="${p.roi >= 0 ? 'roi-pos' : 'roi-neg'}">${fmtPct(p.roi)}</span>
-      </div>
-    `).join("");
+function switchUser(){
+  sessionStorage.removeItem("downersUsername");
+  document.getElementById("userEntryRow").style.display = "flex";
+  document.getElementById("userSummary").style.display = "none";
+  document.getElementById("usernameInput").value = "";
+}
+
+async function loadUserSummary(){
+  const username = getUsername();
+  if(!username) return;
+  document.getElementById("userEntryRow").style.display = "none";
+  const summaryEl = document.getElementById("userSummary");
+  summaryEl.style.display = "block";
+  document.getElementById("currentUsernameLabel").textContent = username;
+  document.getElementById("summaryGrid").innerHTML = `<div class="loading-note">Checking your open positions against live prices…</div>`;
+  document.getElementById("tradesList").innerHTML = "";
+
+  try {
+    const data = await jsonpRequest({ action: "getSummary", username });
+    if(data.error){
+      document.getElementById("summaryGrid").innerHTML = `<div class="loading-note">${data.error}</div>`;
+      return;
+    }
+    renderSummary(data);
+  } catch(err){
+    document.getElementById("summaryGrid").innerHTML = `<div class="loading-note">${err.message}</div>`;
   }
 }
 
-document.getElementById("ffBtn").addEventListener("click", advanceDay);
-document.getElementById("resetBtn").addEventListener("click", () => {
-  events.forEach(e => {
-    if(e.basePrice !== null && e.currentPrice !== null){
-      state[e.id] = { live: e.currentPrice, position: null };
+function renderSummary(data){
+  const s = data.summary;
+  document.getElementById("summaryGrid").innerHTML = `
+    <div class="tally-stat">
+      <div class="num ${s.totalRealizedGain >= 0 ? 'pos':'neg'}">${fmtMoney(s.totalRealizedGain)}</div>
+      <div class="lbl">Realized gain</div>
+    </div>
+    <div class="tally-stat">
+      <div class="num ${s.aggregateROI >= 0 ? 'pos':'neg'}">${s.aggregateROI.toFixed(1)}%</div>
+      <div class="lbl">Aggregate ROI</div>
+    </div>
+    <div class="tally-stat">
+      <div class="num">${s.winRate !== null ? s.winRate + '%' : '—'}</div>
+      <div class="lbl">Win rate</div>
+    </div>
+    <div class="tally-stat">
+      <div class="num">${fmtMoney(s.peakCapitalAtRisk)}</div>
+      <div class="lbl">Peak capital at risk</div>
+    </div>
+    <div class="tally-stat">
+      <div class="num">${s.openCount}</div>
+      <div class="lbl">Open positions</div>
+    </div>
+    <div class="tally-stat">
+      <div class="num">${s.closedCount}</div>
+      <div class="lbl">Closed positions</div>
+    </div>
+  `;
+
+  const list = document.getElementById("tradesList");
+  if(data.trades.length === 0){
+    list.innerHTML = `<div class="log-empty">No trades yet — click Mock Buy on any flagged event above.</div>`;
+  } else {
+    list.innerHTML = data.trades.map(t => {
+      if(t.status === "closed"){
+        const cls = t.realizedGain >= 0 ? "roi-pos" : "roi-neg";
+        return `<div class="log-entry"><span>${t.company} <span class="ticker">${t.ticker}</span></span><span class="${cls}">${fmtMoney(t.realizedGain)}</span></div>`;
+      }
+      return `<div class="log-entry"><span>${t.company} <span class="ticker">${t.ticker}</span></span><span>Open</span></div>`;
+    }).join("");
+  }
+}
+
+async function mockBuy(id){
+  const ev = events.find(e => e.id === id);
+  const s = state[id];
+  if(!ev || !s || ev.basePrice === null || s.live === null) return;
+
+  const upside = ((ev.basePrice - s.live) / s.live * 100);
+  if(upside <= 0) return;
+  const invested = Math.round((100 / (upside / 100)) * 100) / 100;
+
+  let username = getUsername();
+  if(!username){
+    const entered = prompt("Enter a username to track your mock trades (no password needed):");
+    if(!entered || !entered.trim()) return;
+    username = entered.trim();
+    sessionStorage.setItem("downersUsername", username);
+  }
+
+  const btn = document.querySelector(`[data-buy-id="${id}"]`);
+  if(btn){ btn.disabled = true; btn.textContent = "Saving…"; }
+
+  try {
+    const result = await jsonpRequest({
+      action: "addTrade",
+      username,
+      company: ev.company,
+      ticker: ev.ticker || ev.substituteTicker || "",
+      buyPrice: s.live,
+      targetPrice: ev.basePrice,
+      invested
+    });
+    if(result.error){
+      alert("Couldn't save trade: " + result.error);
+      if(btn){ btn.disabled = false; btn.textContent = "Mock Buy"; }
+      return;
     }
-  });
-  closedPositions = [];
-  day = 0;
-  renderEvents();
-  renderTally();
+    if(btn){ btn.textContent = "Saved ✓"; }
+    loadUserSummary();
+  } catch(err){
+    alert(err.message);
+    if(btn){ btn.disabled = false; btn.textContent = "Mock Buy"; }
+  }
+}
+
+document.getElementById("usernameInput").addEventListener("keydown", (e) => {
+  if(e.key === "Enter") submitUsername();
 });
+document.getElementById("submitUsernameBtn").addEventListener("click", submitUsername);
+document.getElementById("switchUserBtn").addEventListener("click", switchUser);
+
+// If a username is already in this browser session, skip straight to
+// their summary instead of showing the entry field.
+if(getUsername()){
+  document.getElementById("userEntryRow").style.display = "none";
+  loadUserSummary();
+}
 
 loadEvents();
 </script>

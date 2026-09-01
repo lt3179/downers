@@ -772,7 +772,6 @@ async function loadEvents(){
       renderEvents();
     }
     renderInfoEvents();
-    renderTally();
   } catch (err) {
     list.innerHTML = `<div class="empty-state">Couldn't load events.json (${err.message}). This page needs to be served alongside events.json — e.g. via GitHub Pages — rather than opened as a local file.</div>`;
   }

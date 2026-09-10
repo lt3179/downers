@@ -1,5 +1,6 @@
 import os
 import json
+import math
 import time
 from datetime import datetime, timedelta
 from datetime import datetime as dt
@@ -211,6 +212,10 @@ def get_price_data(ticker):
         current_price = round(float(closes.iloc[-1]), 2)
         current_price_date = hist.index[-1].strftime("%Y-%m-%d")
 
+        if math.isnan(base_price) or math.isnan(avg_base_price_15d) or math.isnan(current_price):
+            return {"base_price": None, "current_price": None,
+                    "price_error": "Latest price data from source was incomplete (NaN)"}
+
         return {
             "base_price": base_price,
             "base_price_date": base_price_date,
@@ -314,7 +319,7 @@ def main():
     }
 
     with open("events.json", "w") as f:
-        json.dump(output, f, indent=2)
+        json.dump(output, f, indent=2, allow_nan=False)
 
     print(f"Processed {len(headlines)} headlines, {flagged_count} flagged. Saved to events.json")
 

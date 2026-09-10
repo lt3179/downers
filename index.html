@@ -599,19 +599,7 @@
 
     <div class="section-label" style="margin-top:20px;">Your Mock Portfolio</div>
     <div class="user-banner">
-      <div class="user-banner-row" id="userEntryRow">
-        <input type="text" id="usernameInput" placeholder="Enter a username to track your mock trades — no password needed">
-        <button class="btn" id="submitUsernameBtn">Go</button>
-      </div>
-      <div class="user-summary" id="userSummary" style="display:none;">
-        <div class="user-summary-head">
-          <span>Tracking as <b id="currentUsernameLabel"></b></span>
-          <button class="reset-btn" id="switchUserBtn">Switch user</button>
-        </div>
-        <div class="tally-grid" id="summaryGrid"></div>
-        <div class="tally-title" style="margin-top:14px;">Trades</div>
-        <div id="tradesList"></div>
-      </div>
+      <div class="empty-state">Portfolio tracking as a user is still being developed. Mock Buy is disabled for now — check back soon.</div>
     </div>
 
     <div class="disclaimer-card" style="margin-top:8px;">
@@ -897,7 +885,8 @@ function renderEvents(){
         const investAmt = 100 / (upside / 100);
         buyRowHtml = `
           <div class="position-info">Buys ${fmtMoney(investAmt)} worth @ ${fmtMoney(s.live)} — targets $100 profit at recovery</div>
-          <button class="btn" data-buy-id="${e.id}" onclick="mockBuy('${e.id}')">Mock Buy</button>
+          <button class="btn" data-buy-id="${e.id}" onclick="mockBuyPlaceholder('${e.id}')">Mock Buy</button>
+          <div class="loading-note" id="buyNotice-${e.id}" style="display:none;">Portfolio tracking as a user is still being developed — check back soon.</div>
         `;
       }
     }
@@ -1127,61 +1116,16 @@ function renderSummary(data){
   }
 }
 
-async function mockBuy(id){
-  const ev = events.find(e => e.id === id);
-  const s = state[id];
-  if(!ev || !s || ev.basePrice === null || s.live === null) return;
-
-  const upside = ((ev.basePrice - s.live) / s.live * 100);
-  if(upside <= 0) return;
-  const invested = Math.round((100 / (upside / 100)) * 100) / 100;
-
-  let username = getUsername();
-  if(!username){
-    const entered = prompt("Enter a username to track your mock trades (no password needed):");
-    if(!entered || !entered.trim()) return;
-    username = entered.trim();
-    sessionStorage.setItem("downersUsername", username);
-  }
-
+function mockBuyPlaceholder(id){
+  const notice = document.getElementById(`buyNotice-${id}`);
+  if(notice){ notice.style.display = "block"; }
   const btn = document.querySelector(`[data-buy-id="${id}"]`);
-  if(btn){ btn.disabled = true; btn.textContent = "Saving…"; }
-
-  try {
-    const result = await jsonpRequest({
-      action: "addTrade",
-      username,
-      company: ev.company,
-      ticker: ev.ticker || ev.substituteTicker || "",
-      buyPrice: s.live,
-      targetPrice: ev.basePrice,
-      invested
-    });
-    if(result.error){
-      alert("Couldn't save trade: " + result.error);
-      if(btn){ btn.disabled = false; btn.textContent = "Mock Buy"; }
-      return;
-    }
-    if(btn){ btn.textContent = "Saved ✓"; }
-    loadUserSummary();
-  } catch(err){
-    alert(err.message);
-    if(btn){ btn.disabled = false; btn.textContent = "Mock Buy"; }
-  }
+  if(btn){ btn.disabled = true; btn.textContent = "Coming soon"; }
 }
 
-document.getElementById("usernameInput").addEventListener("keydown", (e) => {
-  if(e.key === "Enter") submitUsername();
-});
-document.getElementById("submitUsernameBtn").addEventListener("click", submitUsername);
-document.getElementById("switchUserBtn").addEventListener("click", switchUser);
-
-// If a username is already in this browser session, skip straight to
-// their summary instead of showing the entry field.
-if(getUsername()){
-  document.getElementById("userEntryRow").style.display = "none";
-  loadUserSummary();
-}
+// Portfolio tracking (username entry, mock buy, jsonpRequest calls) is
+// disabled while that feature is still being built — see the notice in
+// the "Your Mock Portfolio" section above.
 
 loadEvents();
 </script>
